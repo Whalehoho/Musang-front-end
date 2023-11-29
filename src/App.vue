@@ -1,16 +1,21 @@
-<template id="app">
-    <!-- <NavigationBar />
-    <router-view/>
-    <SiteFooter /> -->
-    <!-- <LoginPage /> -->
-    <LoginCard2/>
+<template>
+  
+    <transition
+      enter-active-class="fade-enter-active"
+      enter-from-class="fade-enter-from"
+      leave-active-class="fade-leave-active"
+      leave-to-class="fade-leave-to"
+    >
+      <router-view></router-view>
+    </transition>
+
 </template>
 
 <script setup>
 // import NavigationBar from './components/NavigationBar.vue';
 // import SiteFooter from './components/SiteFooter.vue';
-// import LoginPage from './components/LoginPage.vue';
-import LoginCard2 from './components/LoginCard2.vue'
+//  import JobsCard from './components/JobsCard.vue';
+// import LoginCard from './components/LoginCard.vue';
 
 
 </script>

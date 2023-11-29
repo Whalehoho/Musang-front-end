@@ -1,41 +1,87 @@
 <template>
-    <nav class="flex items-center justify-between p-4">
-      <div class="text-lg font-bold">Musang</div>
-      <div>
-        <router-link to="/" class="mx-2">Home</router-link>
-        <router-link to="/jobs" class="mx-2">Jobs</router-link>
-        <router-link v-if="!userLoggedIn" to="/login" class="mx-2">Login</router-link>
-        <router-link v-if="!userLoggedIn" to="/register" class="mx-2">Register</router-link>
-        <button v-if="userLoggedIn" @click="logout" class="mx-2">Logout</button>
+  <div class="navigation-bar w-full h-20 top-0 absolute bg-transparent shadow-lg justify-between items-start inline-flex">
+    
+      <button @click="home" class="h-full">
+        <div class="Logoframe w-40 h-full flex-col justify-center items-center gap-2.5 inline-flex">
+        <img :src="logo" class="Logo h-full" />
       </div>
-    </nav>
-  </template>
+      </button>
+    
+    <div class="Navigationframe justify-start items-start flex">
+      <div class="Jobsframe h-20  justify-center items-center gap-2.5 flex">
+        <button @click="jobs" type="submit" class="text-2xl h-full hover:shadow-lg text-black font-grover font-normal  px-8 ">
+          Find Jobs
+        </button>
+      </div>
+      <div class="Comsframe h-20  justify-center items-center gap-2.5 flex">
+        <button type="submit" class="text-2xl h-full hover:shadow-lg text-black font-grover font-normal  px-8 ">
+          Hire Freelancers
+        </button>
+      </div>
+    </div>
+    <!-- <div class="Searchframe w-96 h-16 mx-64 px-14 py-2.5 justify-center items-center gap-2.5 inline-flex">
+      <div class="Searchbar w-96 h-8 relative bg-white rounded-2xl border border-black border-opacity-30"></div>
+    </div> -->
+    <div class="Searchframe w-96 h-full mx-64 flex items-center">
+      <div
+        class="Searchbar w-full h-3/5 relative bg-white rounded-full shadow-lg border border-black border-opacity-30 flex items-center ">
+        <input type="search" placeholder="Search Industries"
+          class="w-full h-full pl-4 pr-16 font-grover rounded-full focus:outline-none" />
+        <button type="submit" class="absolute right-2.5 ">
+          <span
+            class="flex items-center justify-center h-10 w-10 rounded-full bg-emerald-400 bg-opacity-10 text-slate-500 hover:bg-opacity-50">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- <div class="Profileframe w-40 h-full px-7 flex justify-end items-center">
+  <div class="Profile w-14 h-14 bg-cyan-500 bg-opacity-25 rounded-full shadow-lg border-4 border-white border-opacity-100 relative">
+    <div class="absolute top-0 right-0 bottom-0 left-0 rounded-full border-2 border-cyan-500 -m-1 flex items-center justify-center text-black text-3xl font-bold"></div>
+  </div>
+</div> -->
+    <div class="Profileframe w-40 h-full px-7 flex justify-end items-center">
+      <div
+        class="Profile w-14 h-14 bg-cyan-400 bg-opacity-25 rounded-full shadow border border-white border-opacity-100 relative ">
+        <div class="unselectable absolute top-0 right-0 bottom-0 left-0 rounded-full border-2 border-cyan-400 -m-1 flex items-center justify-center text-black text-3xl font-grover">
+          ?
+        </div>
+
+      </div>
+    </div>
+
+
+
+</div></template>
   
-  <script>
-  export default {
-    name: 'NavigationBar',
-    data() {
-      return {
-        userLoggedIn: false, // This should eventually come from Vuex store
-      };
+<script>
+import logo from '../assets/musang_logo.png';
+export default {
+  name: 'NavigationBar',
+  data() {
+    return {
+      logo: logo,
+    };
+  },
+  methods: {
+    home() {
+      // Login logic here
+      this.$router.push({ name: 'Login' });
     },
-    methods: {
-      logout() {
-        // Logout logic here
-        this.userLoggedIn = false;
-        // Here you would also call the Vuex action to update the state
-      },
-    },
-  };
-  </script>
+    jobs() {
+      // Login logic here
+      this.$router.push({ name: 'Jobs' });
+    }
+  }
+};
+</script>
   
-  <!-- Add "scoped" attribute to limit CSS to this component only -->
-  <style scoped>
-  nav {
-    background-color: #f3f4f6; /* light gray */
-  }
-  .router-link-active {
-    font-weight: bold;
-  }
-  </style>
+<style scoped>
+/* Styling specific to JobsCard can go here */
+</style>
   

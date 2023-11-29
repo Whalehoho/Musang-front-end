@@ -1,89 +1,71 @@
 <template>
-    <div class="login-page-container">
-      <div class="login-card">
-        <div class="logo-section">
-          <h1>LOGO</h1>
-          <p>Excellent Tuition Center</p>
-          <p>slogan, announcement, etc.</p>
+  <div
+    class="login-page flex h-screen items-center justify-center gap-20 p-20 border border-black bg-gradient-to-b from-cyan-500 to-emerald-400">
+    <!-- Logo Section -->
+    <!-- <div class="flex-1 flex justify-center items-center w-16 p-2">
+      <img :src="logo" alt="Musang Logo" class="h-70 object-cover " />
+      <div class="h-[600px]  w-[100px]"></div>
+    </div> -->
+
+
+
+
+    <!-- Login Form Section -->
+    <div class="login-form w-full mx-auto max-w-xl flex flex-col items-center  bg-gradient-to-b from-emerald-300 to-cyan-500  rounded-lg shadow-2xl h-[800px]">
+      <div class="flex flex-col gap-1 top-0 w-full max-w-xs justify-center items-center">
+        <div class="w-full h-16"></div>
+        <img :src="logo" alt="Musang Logo" class="h-40 object-cover " />
+        <h1 class="text-4xl mb-10 inset-x-0 top-0 font-grover font-normal break-words">Musang.com</h1>
+      </div>
+      <div class="w-full h-16"></div>
+      <div class="inset-x-0 top-0 w-full max-w-xs justify-center items-center">
+        <form @submit.prevent="login" class="flex flex-col gap-4 w-full max-w-xs ">
+          <div class="flex flex-col gap-3.5">
+            <input type="text" placeholder="Username" v-model="username"
+              class="border border-black font-fatface rounded p-3 m-3 text-sm" />
+            <input type="password" placeholder="Password" v-model="password"
+              class="border border-black font-fatface rounded p-3 m-3 text-sm" />
+
+          </div>
+        </form>
+        <div class="flex flex-col gap-14 w-full max-w-xs justify-center items-center">
+          <div class="w-full h-8"></div>
+
+              <!-- <Router-link :to="jobs">hi</Router-link> -->
+          
+            <button @click="login" type="submit"
+            class="text-2xl bg-teal-500 hover:bg-teal-600 text-black font-grover font-normal break-words rounded-lg shadow-md py-4 px-8 ">
+            Login
+          </button>
+          
         </div>
-        <div class="form-section">
-          <h2>Use Account</h2>
-          <form @submit.prevent="login">
-            <input type="text" placeholder="Username" v-model="username" />
-            <input type="password" placeholder="Password" v-model="password" />
-            <button type="submit">Login</button>
-          </form>
-        </div>
+        
+        
       </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    name: 'LoginPage',
-    data() {
-      return {
-        username: '',
-        password: '',
-      };
-    },
-    methods: {
-      login() {
-        // Login logic here
-      }
+  </div>
+</template>
+
+<script>
+import logo from '../assets/musang_logo.png';
+export default {
+  name: 'LoginPage',
+  data() {
+    return {
+      username: '',
+      password: '',
+      logo: logo
+    };
+  },
+  methods: {
+    login() {
+      // Login logic here
+      this.$router.push({ name: 'Home' });
     }
-  };
-  </script>
-  
-  <style scoped>
-  .login-page-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    padding: 1rem;
-    background-color: #f7d7d7; /* Adjust the background color as needed */
   }
-  
-  .login-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-    width: 100%;
-    max-width: 350px; /* Adjust the width as needed */
-    box-sizing: border-box;
-  }
-  
-  .logo-section, .form-section {
-    width: 100%;
-    text-align: center;
-  }
-  
-  h1, h2, p {
-    margin: 0.5rem 0;
-  }
-  
-  input[type="text"],
-  input[type="password"] {
-    width: 100%;
-    padding: 0.5rem;
-    margin: 0.5rem 0;
-    border: 1px solid #ccc;
-    border-radius: 15px;
-  }
-  
-  button[type="submit"] {
-    width: 100%;
-    padding: 0.5rem;
-    border: none;
-    border-radius: 15px;
-    background-color: #e1e1e1; /* Adjust the button color as needed */
-    cursor: pointer;
-  }
-  </style>
-  
+};
+</script>
+
+<style scoped>
+/* Add any additional styles here */
+</style>

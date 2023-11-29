@@ -1,28 +1,51 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import LoginPage from '../views/LoginPage.vue';
 import HomePage from '../views/HomePage.vue';
+import JobCard from '../components/JobCard.vue';
+import JobsPage from '../views/JobsPage.vue';
 
 // Define routes for the application
 const routes = [
   {
+    path: '/l',
+    name:'Login',
+    component:LoginPage
+  },
+  {
+    path: '/j',
+    name:'JobCard',
+    component:JobCard
+  },
+  {
+    path: '/h',
+    name:'Home',
+    component:HomePage
+  },
+  {
     path: '/',
-    name: 'Home',
-    component: HomePage
+    name:'Jobs',
+    component:JobsPage
   },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import('../views/LoginPage.vue')
-  },
-  {
-    path: '/register',
-    name: 'Register',
-    component: () => import('../views/RegisterPage.vue')
-  },
-  {
-    path: '/jobs',
-    name: 'Jobs',
-    component: () => import('../views/JobsPage.vue')
-  },
+  // {
+  //   path: '/',
+  //   name: 'Home',
+  //   component: HomePage
+  // },
+  // {
+  //   path: '/login',
+  //   name: 'Login',
+  //   component: () => import('../views/LoginPage.vue')
+  // },
+  // {
+  //   path: '/register',
+  //   name: 'Register',
+  //   component: () => import('../views/RegisterPage.vue')
+  // },
+  // {
+  //   path: '/jobs',
+  //   name: 'Jobs',
+  //   component: () => import('../views/JobsPage.vue')
+  // },
   // Additional routes can be added here
 ];
 

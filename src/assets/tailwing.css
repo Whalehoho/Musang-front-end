@@ -8,8 +8,108 @@
 
 /* Or, if you need to directly reference from your public directory */
 @font-face {
-    font-family: 'Irish Grover';
-    src: url('./fonts/IrishGrover-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
+  font-family: 'Irish Grover';
+  src: url('./fonts/IrishGrover-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Inder';
+  src: url('./fonts/Inder-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Cardo-Bold';
+  src: url('./fonts/Cardo-Bold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Cardo-Italic';
+  src: url('./fonts/Cardo-Italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Cardo-Regular';
+  src: url('./fonts/Cardo-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*transition effect*/
+.fade-enter-active,
+.fade-leave-active {
+  @apply transition-opacity duration-500;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  @apply opacity-0;
+}
+
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  @apply transition-all ease-out duration-75;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  @apply translate-x-96 opacity-0;
+}
+
+.slide-fade-enter-to,
+.slide-fade-leave-from {
+  @apply translate-x-0 opacity-100;
+}
+
+
+
+/* Style for all scrollbars within the application */
+::-webkit-scrollbar {
+  width: 12px; /* width of the entire scrollbar */
+}
+
+::-webkit-scrollbar-track { 
+  background: #f0f0f088; /* color of the tracking area */
+} 
+
+::-webkit-scrollbar-thumb { 
+  background-color: rgb(21, 115, 85, 0.3); /* color of the scroll thumb */
+  border-radius: 6px; /* roundness of the scroll thumb */
+  border: 3px solid  #f0f0f088 ; /* creates padding around scroll thumb */
+}
+
+/* If you are using Firefox, you can use the scrollbar-color and scrollbar-width properties */
+* {
+  scrollbar-color: #888 #f0f0f0; /* thumb and track color */
+  scrollbar-width: thin; /* 'auto', 'thin', 'none' */
+}
+
+.glassmorphic-frame {
+  background: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Light white border for subtle edge */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft box shadow */
+  backdrop-filter: blur(10px); /* Blur the background */
+  -webkit-backdrop-filter: blur(10px); /* For Safari */
+  border-radius: 16px; /* Rounded corners */
+  
+}
+
+*.unselectable {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+
+  /*
+    Introduced in Internet Explorer 10.
+    See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+  */
+  -ms-user-select: none;
+  user-select: none;
+}
