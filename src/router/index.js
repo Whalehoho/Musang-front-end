@@ -3,6 +3,8 @@ import LoginPage from '../views/LoginPage.vue';
 import HomePage from '../views/HomePage.vue';
 import JobCard from '../components/JobCard.vue';
 import JobsPage from '../views/JobsPage.vue';
+import ProjectPage from '../views/ProjectPage.vue';
+import HirePage from '../views/HirePage.vue';
 
 // Define routes for the application
 const routes = [
@@ -14,7 +16,8 @@ const routes = [
   {
     path: '/j',
     name:'JobCard',
-    component:JobCard
+    component:JobCard,
+    props:true
   },
   {
     path: '/h',
@@ -25,6 +28,18 @@ const routes = [
     path: '/',
     name:'Jobs',
     component:JobsPage
+  },
+  {
+    path: '/p/title/:title/descr/:description/daysLeft/:daysLeft/payment/:payment/tags/:tags/location/:location/rewards/:rewards/reqs/:reqs/deadline/:deadline',
+    name:'Project',
+    component:ProjectPage,
+    props:true
+  },
+  {
+    path: '/h',
+    name:'Hire',
+    component:HirePage,
+    props:true
   },
   // {
   //   path: '/',

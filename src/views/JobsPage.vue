@@ -3,49 +3,24 @@
     class="layout flex flex-col  h-screen items-center  gap-20 pt-20 border border-black bg-gradient-to-b from-emerald-500 to-cyan-400">
     <NavigationBar />
     <div class=" w-screen  space-y-10 overflow-auto">
-      <!-- <JobCard/>
-    <JobCard/>
-    <JobCard/>
-    <JobCard/> -->
-    <h1>Jobs Listing</h1>
-    <ul>
-      <li v-for="job in jobs" :key="job._id">
-        <h2>{{ job['Project Title'] }}</h2> <!-- Use bracket notation for keys with spaces -->
-        <p>{{ job['Description'] }}</p>
-        <!-- Access other properties with spaces similarly -->
-      </li>
-    </ul>
+      <JobCard v-for="job in jobs" :key="job['id']" :title="job['Project Title']" :description="job['Description']"
+        :deadline="job['Closing Date']" :payment="job['Payment Method']" :tags="job['Tags']" :location="job['Location']"
+        :rewards="Math.floor(job['Rewards'])" :requirements="job['Requirements']" />
     </div>
-
   </div>
-  <!-- <section class="bg-gray-100 py-8">
-      <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <JobCard
-            v-for="job in jobs"
-            :key="job.id"
-            :title="job.title"
-            :description="job.description"
-            :skills="job.skills"
-            :priceRange="job.priceRange"
-            :daysLeft="job.daysLeft"
-          />
-        </div>
-      </div>
-    </section> -->
 </template>
   
 <script>
 import axios from 'axios';
 import NavigationBar from '../components/NavigationBar.vue';
-// import JobCard from '../components/JobCard.vue';
+import JobCard from '../components/JobCard.vue';
 
 
 export default {
   name: 'JobsPage',
   components: {
-    // JobCard,
-     NavigationBar,
+    JobCard,
+    NavigationBar,
   },
   data() {
     return {
@@ -57,7 +32,8 @@ export default {
   },
   methods: {
     fetchJobs() {
-      axios.get('http://localhost:3000/jobs')
+      axios.get('https://musang-server-8d173f42ebdb.herokuapp.com/jobs')
+        // axios.get('http://localhost:3000/jobs')
         .then(response => {
           this.jobs = response.data.map(job => ({
             ...job,
@@ -69,7 +45,8 @@ export default {
         .catch(error => {
           console.error('Error fetching jobs:', error);
         });
-    }
+    },
+    
   },
   // Fetch jobs from an API or use Vuex to get job data
   mounted() {

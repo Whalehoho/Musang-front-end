@@ -48,6 +48,7 @@
 
 <script>
 import logo from '../assets/musang_logo.png';
+
 export default {
   name: 'LoginPage',
   data() {
@@ -61,7 +62,16 @@ export default {
     login() {
       // Login logic here
       this.$router.push({ name: 'Home' });
-    }
+    },
+    async submitHandler() {
+      // Simulate a delay, e.g., for an API call
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // After the delay, perform actions such as sending data to an API
+      console.log('Form submitted after delay');
+      
+      // Optionally, clear the form, show a message, or redirect the user
+    },
   }
 };
 </script>

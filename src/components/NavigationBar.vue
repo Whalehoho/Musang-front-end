@@ -1,21 +1,28 @@
 <template>
   <div class="navigation-bar w-full h-20 top-0 absolute bg-transparent shadow-lg justify-between items-start inline-flex">
-    
-      <button @click="home" class="h-full">
-        <div class="Logoframe w-40 h-full flex-col justify-center items-center gap-2.5 inline-flex">
+
+    <button @click="home" class="h-full">
+      <div class="Logoframe w-40 h-full flex-col justify-center items-center gap-2.5 inline-flex">
         <img :src="logo" class="Logo h-full" />
       </div>
-      </button>
-    
+    </button>
+
     <div class="Navigationframe justify-start items-start flex">
       <div class="Jobsframe h-20  justify-center items-center gap-2.5 flex">
-        <button @click="jobs" type="submit" class="text-2xl h-full hover:shadow-lg text-black font-grover font-normal  px-8 ">
-          Find Jobs
+        <button @click="selectButton('jobs')"  type="submit"
+          class="text-2xl h-full hover:shadow-lg text-black font-grover font-normal px-8">
+          <div :class="{ 'active-button': selectedButton === 'jobs' }" class="flex h-full items-center">
+            Find Jobs
+          </div>
+          
         </button>
       </div>
-      <div class="Comsframe h-20  justify-center items-center gap-2.5 flex">
-        <button type="submit" class="text-2xl h-full hover:shadow-lg text-black font-grover font-normal  px-8 ">
-          Hire Freelancers
+      <div class="Comsframe h-20 justify-center items-center gap-2.5 flex">
+        <button @click="selectButton('hire')" type="submit"
+          class="text-2xl h-full hover:shadow-lg text-black font-grover font-normal px-8">
+          <div :class="{ 'active-button': selectedButton === 'hire' }" class="flex h-full items-center">
+            Hire Freelancers
+          </div>
         </button>
       </div>
     </div>
@@ -47,8 +54,9 @@
 </div> -->
     <div class="Profileframe w-40 h-full px-7 flex justify-end items-center">
       <div
-        class="Profile w-14 h-14 bg-cyan-400 bg-opacity-25 rounded-full shadow border border-white border-opacity-100 relative ">
-        <div class="unselectable absolute top-0 right-0 bottom-0 left-0 rounded-full border-2 border-cyan-400 -m-1 flex items-center justify-center text-black text-3xl font-grover">
+        class="Profile w-14 h-14 bg-slate-700 bg-opacity-25 rounded-full shadow border border-cyan-200 border-opacity-100 relative ">
+        <div
+          class="unselectable absolute top-0 right-0 bottom-0 left-0 rounded-full border-2 border-slate-700 -m-1 flex items-center justify-center text-black text-3xl font-grover">
           ?
         </div>
 
@@ -57,7 +65,8 @@
 
 
 
-</div></template>
+  </div>
+</template>
   
 <script>
 import logo from '../assets/musang_logo.png';
@@ -66,6 +75,7 @@ export default {
   data() {
     return {
       logo: logo,
+      selectedButton: '',
     };
   },
   methods: {
@@ -75,13 +85,38 @@ export default {
     },
     jobs() {
       // Login logic here
-      this.$router.push({ name: 'Jobs' });
-    }
+      this.$router.push({ name: 'Jobs',query: { selectedButton: 'jobs' } },);
+    },
+    hire() {
+      // Login logic here
+      this.$router.push({ name: 'Hire',query: { selectedButton: 'hire' } });
+    },
+    selectButton(button) {
+      this.selectedButton = button;
+      if(button === "jobs")
+        this.jobs();
+      else if(button === "hire")
+        this.hire();
+    },
+  },
+  mounted(){
+    this.selectedButton = this.$route.query.selectedButton;
   }
 };
 </script>
   
 <style scoped>
-/* Styling specific to JobsCard can go here */
+.active-button {
+  /* Define your active button styles here */
+  /* Add a solid black bottom border */
+  border-bottom: 8px solid DarkSlateGray;
+
+  /* Remove other borders */
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  
+
+}
 </style>
   
