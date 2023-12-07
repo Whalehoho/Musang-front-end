@@ -2,7 +2,7 @@
     <div class="post-job w-full   flex flex-col overflow-auto items-center">
         <!-- The outer container should be the full width and height of the viewport and allow for overflow content to scroll -->
         <div class="flex justify-center m-4 space-x-4 w-1/2">
-            <div class="w-full flex flex-col glassmorphic-frame rounded-lg shadow-2xl p-4    h-fit font-fatface">
+            <div class="w-full flex flex-col glassmorphic-frame rounded-lg shadow-2xl p-4 h-fit font-fatface">
                 <FormKit type="form" @submit="submitForm" class="flex h-fit w-full">
 
                     <template #submit>
@@ -101,7 +101,7 @@
                         <FormKit type="date" :min="today" v-model="selectedDate" validation="required"
                             input-class=" w-[240px] font-cardo p-2 border rounded-lg shadow-lg" :validation-messages="{
                                 required: 'Please select a date.'
-                            }" />
+                            }" validation-visibility="live" message-class="text-red-600 font-bold text-lg m-2" />
                     </div>
 
                     </div>

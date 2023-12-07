@@ -98,7 +98,23 @@
   backdrop-filter: blur(10px); /* Blur the background */
   -webkit-backdrop-filter: blur(10px); /* For Safari */
   border-radius: 16px; /* Rounded corners */
-  
+}
+
+.glassmorphic-frame-top-sharp {
+  background: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Light white border for subtle edge */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft box shadow */
+  backdrop-filter: blur(10px); /* Blur the background */
+  -webkit-backdrop-filter: blur(10px); /* For Safari */
+  border-radius: 0px 0px 16px 16px; /* Rounded corners only at the bottom */  
+}
+
+.glassmorphic-frame-sharp {
+  background: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Light white border for subtle edge */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft box shadow */
+  backdrop-filter: blur(10px); /* Blur the background */
+  -webkit-backdrop-filter: blur(10px); /* For Safari */
 }
 
 *.unselectable {

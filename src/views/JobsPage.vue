@@ -5,7 +5,7 @@
     <div class=" w-screen  space-y-10 overflow-auto">
       <JobCard v-for="job in jobs" :key="job['id']" :title="job['Project Title']" :description="job['Description']"
         :deadline="job['Closing Date']" :payment="job['Payment Method']" :tags="job['Tags']" :location="job['Location']"
-        :rewards="Math.floor(job['Rewards'])" :requirements="job['Requirements']" />
+        :rewards="Math.floor(job['Rewards'])" :requirements="job['Requirements']" :status="job['Status']" :client="job['Client']"/>
     </div>
   </div>
 </template>
@@ -29,6 +29,7 @@ export default {
   },
   created() {
     this.fetchJobs();
+    console.log(this.jobs)
   },
   methods: {
     fetchJobs() {
@@ -37,8 +38,8 @@ export default {
         .then(response => {
           this.jobs = response.data.map(job => ({
             ...job,
-            projectTitle: job['Project Title'], // Assigning to a valid JS property name
-            description: job['Description']
+            // projectTitle: job['Project Title'], // Assigning to a valid JS property name
+            // description: job['Description']
             // Continue mapping other properties as needed
           }));
         })
@@ -47,6 +48,7 @@ export default {
         });
     },
     
+
   },
   // Fetch jobs from an API or use Vuex to get job data
   mounted() {

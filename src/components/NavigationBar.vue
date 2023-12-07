@@ -53,25 +53,32 @@
   </div>
 </div> -->
     <div class="Profileframe w-40 h-full px-7 flex justify-end items-center">
-      <div
-        class="Profile w-14 h-14 bg-slate-700 bg-opacity-25 rounded-full shadow border border-cyan-200 border-opacity-100 relative ">
-        <div
-          class="unselectable absolute top-0 right-0 bottom-0 left-0 rounded-full border-2 border-slate-700 -m-1 flex items-center justify-center text-black text-3xl font-grover">
-          ?
-        </div>
-
-      </div>
+      <button @click="profile" class="Profile flex w-14 h-14 relative ">
+        <!-- <div class="unselectable absolute top-0 right-0 bottom-0 left-0 rounded-full border-2 border-slate-700 -m-1 flex items-center justify-center text-black text-3xl font-grover"> -->
+          <img :src="getUserPicture()" class="ProfileImage rounded-full shadow-xl" />
+          <!-- {{ user }} -->
+        <!-- </div> -->
+        </button>
     </div>
 
 
 
   </div>
 </template>
-  
+<!-- <script setup>
+props
+const props = defineProps({
+  loggedIn: Boolean,
+  user: Object // or specific shape if known
+})
+</script> -->
 <script>
+import { mapState } from 'vuex';
 import logo from '../assets/musang_logo.png';
+import profile from '../assets/profile-user-svgrepo-com.svg';
 export default {
   name: 'NavigationBar',
+
   data() {
     return {
       logo: logo,
@@ -81,7 +88,11 @@ export default {
   methods: {
     home() {
       // Login logic here
-      this.$router.push({ name: 'Login' });
+      this.$router.push({ name: 'Home' });
+    },
+    profile() {
+      // Login logic here
+      this.$router.push({ name: 'Profile' });
     },
     jobs() {
       // Login logic here
@@ -98,6 +109,12 @@ export default {
       else if(button === "hire")
         this.hire();
     },
+    getUserPicture() {
+      return this.user && this.user.picture ? this.user.picture : profile;
+    },
+  },
+  computed: {
+    ...mapState(['user', 'loggedIn']) // 'user' and 'otherState' are Vuex state properties
   },
   mounted(){
     this.selectedButton = this.$route.query.selectedButton;

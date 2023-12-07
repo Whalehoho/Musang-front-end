@@ -1,35 +1,47 @@
-import { createStore } from 'vuex';
+// store.js
+import Vuex from 'vuex';
+import axios from 'axios';
 
-// Create a new store instance
-const store = createStore({
-  state () {
-    return {
-      userLoggedIn: false,
-      jobsList: []
-    }
+
+export default new Vuex.Store({
+  state: {
+    user: null,
+    loggedIn: false,
   },
   mutations: {
-    loginUser(state) {
-      state.userLoggedIn = true;
+    setUser(state, user) {
+      state.user = user;
     },
-    logoutUser(state) {
-      state.userLoggedIn = false;
-    },
-    setJobsList(state, jobs) {
-      state.jobsList = jobs;
+    setLoggedIn(state, status) {
+      state.loggedIn = status;
     }
   },
   actions: {
-    fetchJobs({ commit }) {
-      // Here you would fetch jobs from an API and commit them to state
-      // For now, we'll use mock data
-      const mockJobs = [
-        { id: 1, title: 'Frontend Developer', companyName: 'Tech Co', description: 'We are looking for a Vue.js developer...', type: 'Full-time' },
-        // ...other job listings
-      ];
-      commit('setJobsList', mockJobs);
-    }
-  }
-})
+    async loginUser({ commit }, { userData, loggedInState }) {
+      try {
+        if (userData) {
+          // Commit any mutations to the state if necessary
+          commit('setUser', userData);
+          commit('setLoggedIn', loggedInState);
+          // console.log(userData.email);
+          // const data = {
+          //   email: userData.email,
+          //   name: userData.name,
+          //   picture: userData.picture
+          // };
+          await axios.post('https://musang-server-8d173f42ebdb.herokuapp.com/musang-users', userData);
 
-export default store;
+
+        } else {
+          // Handle logout logic  
+          commit('setUser', null);
+          commit('setLoggedIn', false);
+        }
+
+      } catch (error) {
+        console.error('Error saving user data:', error);
+      }
+    }
+  },
+
+});   

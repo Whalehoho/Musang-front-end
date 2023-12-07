@@ -1,9 +1,10 @@
 <template>
   <div @click="viewProject"
-    class="transition-transform   container glassmorphic-frame w-5/6 m-10 p-4 mx-14 border rounded-md shadow-lg hover:shadow-2xl hover:translate-x-4 hover:cursor-pointer">
+    class="transition-transform  container glassmorphic-frame w-5/6 m-10 p-4 mx-14 border rounded-md shadow-lg hover:shadow-2xl hover:translate-x-4 hover:cursor-pointer">
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-lg font-inder">{{ title }}</h2>
-      <span class="text-sm bg-cyan-500 font-inder px-2 py-1 rounded">{{ daysLeft }} days left</span>
+      <span v-if="daysLeft > 0" class="text-sm bg-cyan-500 font-inder px-2 py-1 rounded">{{ daysLeft }} days left</span>
+      <span v-else class="text-sm bg-cyan-500 font-inder px-2 py-1 rounded">{{ status }} </span>
     </div>
     <p class="text-gray-800 font-cardo text-lg mb-4 overflow-auto max-h-24">
       {{ description }}
@@ -39,7 +40,9 @@ export default {
     tags: { type: String, default: '-' },
     location: { type: String, default: '-' },
     rewards: { type: String, default: '-' },
-    requirements: { type: String, default: '-' }
+    requirements: { type: String, default: '-' },
+    status: { type: String, default: '-' },
+    client: { type: String, default: '-' },
   },
   data() {
   },
@@ -58,6 +61,7 @@ export default {
           rewards: this.rewards,
           reqs: this.requirements,
           daysLeft: this.daysLeft,
+          client: this.client,
         }
       });
     },

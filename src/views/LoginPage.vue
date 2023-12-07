@@ -11,7 +11,8 @@
 
 
     <!-- Login Form Section -->
-    <div class="login-form w-full mx-auto max-w-xl flex flex-col items-center  bg-gradient-to-b from-emerald-300 to-cyan-500  rounded-lg shadow-2xl h-[800px]">
+    <div
+      class="login-form w-full mx-auto max-w-xl flex flex-col items-center  bg-gradient-to-b from-emerald-300 to-cyan-500  rounded-lg shadow-2xl h-[800px]">
       <div class="flex flex-col gap-1 top-0 w-full max-w-xs justify-center items-center">
         <div class="w-full h-16"></div>
         <img :src="logo" alt="Musang Logo" class="h-40 object-cover " />
@@ -31,31 +32,47 @@
         <div class="flex flex-col gap-14 w-full max-w-xs justify-center items-center">
           <div class="w-full h-8"></div>
 
-              <!-- <Router-link :to="jobs">hi</Router-link> -->
-          
-            <button @click="login" type="submit"
+          <!-- <Router-link :to="jobs">hi</Router-link> -->
+
+          <button @click="login" type="submit"
             class="text-2xl bg-teal-500 hover:bg-teal-600 text-black font-grover font-normal break-words rounded-lg shadow-md py-4 px-8 ">
             Login
           </button>
-          
+
+          <!-- <GoogleLogin :callback="callback" prompt auto-login/> -->
+
         </div>
-        
-        
+
+
       </div>
     </div>
   </div>
 </template>
 
 <script>
+// import { GoogleLogin } from 'vue3-google-login';
 import logo from '../assets/musang_logo.png';
-
+// import { decodeCredential } from 'vue3-google-login';
 export default {
   name: 'LoginPage',
   data() {
     return {
+
+
+
       username: '',
       password: '',
-      logo: logo
+      logo: logo,
+
+      // loggedIn:false,
+      // user:null,
+      // callback:(response)=>{
+      //   console.log("logged in")
+      //   this.loggedIn = true
+      //   console.log(response)
+      //   this.user = decodeCredential(response.credential)  //decode JWT token
+      //   console.log(user)
+      // }
     };
   },
   methods: {
@@ -66,13 +83,12 @@ export default {
     async submitHandler() {
       // Simulate a delay, e.g., for an API call
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
       // After the delay, perform actions such as sending data to an API
       console.log('Form submitted after delay');
-      
       // Optionally, clear the form, show a message, or redirect the user
     },
-  }
+  },
+  components: {/* GoogleLogin*/ }
 };
 </script>
 

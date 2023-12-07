@@ -60,18 +60,26 @@
     <div class=" container glassmorphic-frame w-8/12 h-48 rounded-lg shadow-md p-4 mb-4 items-center">
       <!-- This flex container holds the sign-in and register buttons -->
       <div class=" flex my-4 space-x-16 items-center justify-center">
-        <button class="px-6 py-2 w-1/4 glassmorphic-frame  text-gray-700 font-bold  rounded hover:bg-cyan-200">
-          Sign in
-        </button>
-        <button class="px-6 py-2 w-1/4 glassmorphic-frame  text-gray-700  font-bold rounded hover:bg-cyan-200">
+        <!-- <p>{{ loggedIn }}</p> -->
+        <!-- <button class="px-6 py-2 w-1/4 glassmorphic-frame  text-gray-700 font-bold  rounded hover:bg-cyan-200"> -->
+        <GoogleLogin :callback="callback" v-if="user===null" auto-login class="opacity-80 hover:opacity-100" />
+
+        <!-- Content to show after login -->
+        <div v-else>
+          <!-- Content shown after the user has logged in -->
+          <p class="text-xl font-cardo_bold">Welcome, {{ user?.name }}!</p>
+          <!-- You can add more content here that should be visible after login -->
+        </div>
+        <!-- </button> -->
+        <!-- <button class="px-6 py-2 w-1/4 glassmorphic-frame  text-gray-700  font-bold rounded hover:bg-cyan-200">
           Register
-        </button>
+        </button> -->
       </div>
       <!-- Text below the buttons -->
       <div class="text-gray-700 p-8 font-inder text-center">
         <span class="text-yellow-500 text-lg ">&#127775;</span> Sign in to manage your Musang profile and unlock more
         features, or
-        <a href="javascript:void(0);" onclick="window.location.reload();" class="underline">continue as guest</a>.
+        <a href="javascript:void(0);" @click="logout" class="underline">continue as guest</a>.
       </div>
     </div>
 
@@ -140,6 +148,10 @@
 </template> 
   
 <script>
+import { mapState } from 'vuex';
+import { decodeCredential, googleLogout } from 'vue3-google-login';
+import { GoogleLogin } from 'vue3-google-login';
+import { mapActions } from 'vuex';
 import magnifier from '../assets/magnifier.png';
 import pexels1 from '../assets/pexels-anamul-rezwan-1216544 (1).jpg';
 import pexels2 from '../assets/pexels-chevanon-photography-1108101.jpg';
@@ -159,6 +171,20 @@ export default {
   name: 'HomeContent',
   data() {
     return {
+
+      loggedInState: false,
+      userData: null,
+
+      callback: (response) => {
+
+        this.userData = decodeCredential(response.credential)  //decode JWT
+        this.loggedInState = true;
+        console.log("logged in")
+        console.log(this.userData)
+        console.log(response)
+        this.loginUser({'userData':this.userData, 'loggedInState':this.loggedInState});
+      },
+
       magnifier: magnifier,
       pexels1: pexels1,
       pexels2: pexels2,
@@ -187,8 +213,22 @@ export default {
     selectRandomImage() {
       const randomIndex = Math.floor(Math.random() * this.images.length);
       this.randomImage = this.images[randomIndex];
-    }
-  }
+    },
+    logout() {
+      this.userData = null; // Make sure this is synchronous or handled properly if asynchronous
+      this.loggedInState = false; // Set loggedIn to true after successful login
+      console.log('logout');
+      googleLogout();
+      //this.$emit('logout');
+      this.loginUser({ userData: null, loggedInState: false });
+    },
+    ...mapActions(['loginUser']),
+  },
+  computed: {
+    ...mapState(['user', 'loggedIn'])
+  },
+  components: { GoogleLogin },
+
 };
 </script>
   
@@ -201,5 +241,6 @@ video::-webkit-media-controls-timeline {
 audio::-webkit-media-controls,
 video::-webkit-media-controls {
   display: none;
-}</style>
+}
+</style>
   

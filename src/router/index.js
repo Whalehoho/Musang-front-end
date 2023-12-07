@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginPage from '../views/LoginPage.vue';
 import HomePage from '../views/HomePage.vue';
-import JobCard from '../components/JobCard.vue';
 import JobsPage from '../views/JobsPage.vue';
 import ProjectPage from '../views/ProjectPage.vue';
 import HirePage from '../views/HirePage.vue';
+import ProfilePage from '../views/ProfilePage.vue';
+import MyProjectPage from '../views/MyProjectPage.vue';
 
 // Define routes for the application
 const routes = [
@@ -14,38 +15,38 @@ const routes = [
     component:LoginPage
   },
   {
-    path: '/j',
-    name:'JobCard',
-    component:JobCard,
-    props:true
-  },
-  {
-    path: '/h',
+    path: '/',
     name:'Home',
     component:HomePage
   },
   {
-    path: '/',
+    path: '/jobs',
     name:'Jobs',
     component:JobsPage
   },
   {
-    path: '/p/title/:title/descr/:description/daysLeft/:daysLeft/payment/:payment/tags/:tags/location/:location/rewards/:rewards/reqs/:reqs/deadline/:deadline',
+    path: '/p/title/:title/descr/:description/daysLeft/:daysLeft/payment/:payment/tags/:tags/location/:location/rewards/:rewards/reqs/:reqs/deadline/:deadline/client/:client',
     name:'Project',
     component:ProjectPage,
     props:true
   },
   {
-    path: '/h',
+    path: '/p/title/:title?/descr/:description?/daysLeft/:daysLeft?/payment/:payment?/tags/:tags?/location/:location?/rewards/:rewards?/reqs/:reqs?/deadline/:deadline?/appliers/:appliers?/job_taker/:job_taker?',
+    name:'MyProject',
+    component:MyProjectPage,
+    props:true
+  },
+  {
+    path: '/hire',
     name:'Hire',
     component:HirePage,
     props:true
   },
-  // {
-  //   path: '/',
-  //   name: 'Home',
-  //   component: HomePage
-  // },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: ProfilePage
+  },
   // {
   //   path: '/login',
   //   name: 'Login',
