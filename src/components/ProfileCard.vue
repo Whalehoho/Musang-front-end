@@ -53,7 +53,7 @@
 
                                 <div v-if="currentStep===1" class="flex flex-col items-center space-y-10 mb-10">
                                     <!-- <p>{{ user_data.value }}</p> -->
-                                    <MyProjectCard v-for="job in projects" :key="job['id']" :title="job['Project Title']"
+                                    <MyProjectCard v-for="job in projects" :key="job['_id']" :id="job['_id']" :title="job['Project Title']"
                                         :description="job['Description']" :deadline="job['Closing Date']"
                                         :payment="job['Payment Method']" :tags="job['Tags']" :location="job['Location']"
                                         :rewards="Math.floor(job['Rewards'])" :requirements="job['Requirements']" :status="job['Status']" 

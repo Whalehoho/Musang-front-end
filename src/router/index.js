@@ -25,13 +25,13 @@ const routes = [
     component:JobsPage
   },
   {
-    path: '/p/title/:title/descr/:description/daysLeft/:daysLeft/payment/:payment/tags/:tags/location/:location/rewards/:rewards/reqs/:reqs/deadline/:deadline/client/:client',
+    path: '/p/id/:id?/title/:title?/descr/:description?/daysLeft/:daysLeft?/payment/:payment?/tags/:tags?/location/:location?/rewards/:rewards?/reqs/:reqs?/deadline/:deadline?/client/:client?',
     name:'Project',
     component:ProjectPage,
     props:true
   },
   {
-    path: '/p/title/:title?/descr/:description?/daysLeft/:daysLeft?/payment/:payment?/tags/:tags?/location/:location?/rewards/:rewards?/reqs/:reqs?/deadline/:deadline?/appliers/:appliers?/job_taker/:job_taker?',
+    path: '/p/id/:id?/title/:title?/descr/:description?/daysLeft/:daysLeft?/payment/:payment?/tags/:tags?/location/:location?/rewards/:rewards?/reqs/:reqs?/deadline/:deadline?/appliers/:appliers?/job_taker/:job_taker?',
     name:'MyProject',
     component:MyProjectPage,
     props:true

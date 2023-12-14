@@ -3,7 +3,7 @@
     class="layout flex flex-col  h-screen items-center  gap-20 pt-20 border border-black bg-gradient-to-b from-emerald-500 to-cyan-400">
     <NavigationBar />
     <div class=" w-screen  space-y-10 overflow-auto">
-      <JobCard v-for="job in jobs" :key="job['id']" :title="job['Project Title']" :description="job['Description']"
+      <JobCard v-for="job in jobs" :key="job['_id']" :id = "job['_id']" :title="job['Project Title']" :description="job['Description']"
         :deadline="job['Closing Date']" :payment="job['Payment Method']" :tags="job['Tags']" :location="job['Location']"
         :rewards="Math.floor(job['Rewards'])" :requirements="job['Requirements']" :status="job['Status']" :client="job['Client']"/>
     </div>
@@ -47,8 +47,9 @@ export default {
           console.error('Error fetching jobs:', error);
         });
     },
+  },
+  computed:{
     
-
   },
   // Fetch jobs from an API or use Vuex to get job data
   mounted() {

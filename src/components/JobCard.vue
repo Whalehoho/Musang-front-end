@@ -3,7 +3,8 @@
     class="transition-transform  container glassmorphic-frame w-5/6 m-10 p-4 mx-14 border rounded-md shadow-lg hover:shadow-2xl hover:translate-x-4 hover:cursor-pointer">
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-lg font-inder">{{ title }}</h2>
-      <span v-if="daysLeft > 0" class="text-sm bg-cyan-500 font-inder px-2 py-1 rounded">{{ daysLeft }} days left</span>
+      <!-- <h2 class="text-lg font-inder">{{ status }}</h2> -->
+      <span v-if="status === ''" class="text-sm bg-cyan-500 font-inder px-2 py-1 rounded">{{ daysLeft }} days left</span>
       <span v-else class="text-sm bg-cyan-500 font-inder px-2 py-1 rounded">{{ status }} </span>
     </div>
     <p class="text-gray-800 font-cardo text-lg mb-4 overflow-auto max-h-24">
@@ -37,7 +38,7 @@ export default {
     description: { type: String, default: '-' },
     deadline: { type: String, default: '-' },
     payment: { type: String, default: '-' },
-    tags: { type: String, default: '-' },
+    tags: { type: String, default: null },
     location: { type: String, default: '-' },
     rewards: { type: String, default: '-' },
     requirements: { type: String, default: '-' },
@@ -56,10 +57,10 @@ export default {
           description: this.description,
           deadline: this.deadline,
           payment: this.payment,
-          tags: this.tags,
+          tags: this.tags?.join(','),
           location: this.location,
           rewards: this.rewards,
-          reqs: this.requirements,
+          reqs: this.requirements?.join('//'),
           daysLeft: this.daysLeft,
           client: this.client,
         }
@@ -68,20 +69,20 @@ export default {
   },
   computed: {
     reqlist() {
-      // Split the string into an array of items
-      var reqs = this.requirements.split('//').map(requirement => requirement.trim());
-      // return reqs.slice(0,3);
-      return reqs;
+      console.log(this.requirements);
+      return this.requirements;
     },
     limitedReqList() {
       // Return only the first three items of reqlist
       return this.reqlist.slice(0, 3);
     },
     taglist() {
-      if (this.tags != null)
-        return this.tags.split(',').map(tag => tag.trim());
-      else
-        return [' '];
+      // console.log(this.tags);
+      // if (this.tags != null)
+      //   return this.tags.split(',').map(tag => tag.trim());
+      // else
+      //   return [' '];
+      return this.tags;
     },
     daysLeft() {
       const today = new Date();

@@ -8,6 +8,7 @@
           class="project-card w-1/2 min-h-screen flex flex-col items-start glassmorphic-frame rounded-lg shadow-2xl h-fit">
           <div class="flex  top-0 w-full items-start  ">
             <h1 class="text-4xl mb-2 m-8 inset-x-0 top-0 font-cardo_bold font-normal break-words"> {{ title }}</h1>
+            <!-- <h1 class="text-4xl mb-2 m-8 inset-x-0 top-0 font-cardo_bold font-normal break-words"> {{ id }}</h1> -->
           </div>
           <div class="flex w-full justify-between py-4">
             <div class="flex">
@@ -54,7 +55,7 @@
 
                       </div>
                       <div class="status flex flex-col justify-center ml-auto">
-                        <button class="text-xs bg-emerald-300 font-inder px-2 py-1 rounded hover:bg-emerald-500">choose
+                        <button @click="chooseApplier(applier)" class="text-xs bg-emerald-300 font-inder px-2 py-1 rounded hover:bg-emerald-500">choose
                           this</button>
                       </div>
 
@@ -132,9 +133,9 @@
 
   </div>
 </template>
-      
-<script>
 
+<script>
+import axios from 'axios';
 import NavigationBar from '@/components/NavigationBar.vue';
 import ApplierCard from '@/components/ApplierCard.vue';
 import svg_cash from '@/assets/bag-cash-currency-svgrepo-com.svg';
@@ -150,16 +151,39 @@ export default {
     showCard(target) {
       this.target = target;
     },
+    async chooseApplier(applierEmail) {
+    try {
+      
+      const userEmail = this.$store.state.user.email;
+      const projectId = this.id;
+
+      await axios.patch('https://musang-server-8d173f42ebdb.herokuapp.com/assign-job', {
+        userEmail,
+        applierEmail,
+        projectId,
+        newStatus: 'in progress'
+      });
+
+      // Handle the success response, e.g., show a notification or update local state
+      alert('Project job taker updated:',applierEmail);
+    } catch (error) {
+      // Handle the error scenario
+      console.error('Error choosing applier:', error);
+    }
+  }
   },
   computed: {
     formattedDate() {
       return this.deadline.split('T')[0];
     },
     reqlist() {
-      // Split the string into an array of items
-      var reqs = this.reqs.split('//').map(requirement => requirement.trim());
-      // return reqs.slice(0,3);
-      return reqs;
+      if (this.reqs != null) {
+        // console.log(this.appliers);
+        return this.reqs.split('//').map(req => req.trim());
+
+      }
+      else
+        return [];
     },
     taglist() {
       if (this.tags != null)

@@ -3,7 +3,7 @@
     class="layout flex h-screen justify-center gap-20 pt-20 border border-black bg-gradient-to-b from-emerald-500 to-cyan-400">
     <NavigationBar />
 
-    <div class="flex flex-col  overflow-auto space-x-4">
+    <div class="flex flex-col  w-full overflow-auto space-x-4">
       <div class="flex justify-center m-4 space-x-4">
         <div
           class="project-card w-1/2 min-h-screen flex flex-col items-start glassmorphic-frame rounded-lg shadow-2xl h-fit">
@@ -89,7 +89,7 @@
 </template>
     
 <script>
-
+import axios from 'axios';
 import NavigationBar from '@/components/NavigationBar.vue';
 import svg_cash from '@/assets/bag-cash-currency-svgrepo-com.svg';
 import clock from '@/assets/clock-event-planner-svgrepo-com.svg';
@@ -99,30 +99,59 @@ export default {
   props: {
 
   },
-  method: {
-
+  methods: {
+    async apply() {
+      try {
+        const projectId = this.id;
+        console.log(projectId);
+        console.log(this.$store.state.user);
+        const applierEmail = this.$store.state.user.email;
+        // Make an HTTP request to your backend server
+        // Replace `your-backend-endpoint` with the actual URL of your backend endpoint
+        const response = await axios.post('https://musang-server-8d173f42ebdb.herokuapp.com/apply', { projectId, applierEmail });
+        console.log(response.data);
+        alert("Apply success");
+      } catch (error) {
+        console.error('Error applying to project:', error);
+        alert("Error applying to the project");
+      }
+    }
   },
   computed: {
     formattedDate() {
       return this.deadline.split('T')[0];
     },
     reqlist() {
-      // Split the string into an array of items
-      var reqs = this.reqs.split('//').map(requirement => requirement.trim());
-      // return reqs.slice(0,3);
-      return reqs;
+      if (this.reqs != null) {
+        // console.log(this.appliers);
+        return this.reqs.split('//').map(req => req.trim());
+
+      }
+      else
+        return [];
     },
     taglist() {
-      if (this.tags != null)
-        return this.tags.split(',').map(tag => tag.trim());
+      // if (this.tags != null)
+      //   return this.tags.split(',').map(tag => tag.trim());
+      // else
+      //   return [' '];
+
+      if (this.tags != null) {
+        // console.log(this.appliers);
+        return this.tags.split(',').map(tags => tags.trim());
+
+      }
       else
-        return [' '];
+        return [];
+
+      // console.log(this.tags);
+      // return this.tags;
     },
   },
   data() {
     return {
       // Access route parameters
-      // id: this.$route.params.id,
+      id: this.$route.params.id,
       title: this.$route.params.title,
       daysLeft: this.$route.params.daysLeft,
       description: this.$route.params.description,

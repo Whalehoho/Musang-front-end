@@ -1,10 +1,11 @@
 <template>
   <div @click="viewProject"
-    class="transition-transform container glassmorphic-frame min-w-[800px] m-10 p-4  border rounded-md shadow-lg hover:shadow-2xl hover:translate-x-4 hover:cursor-pointer">
+    class="transition-transform container glassmorphic-frame  m-10 p-4  border rounded-md shadow-lg hover:shadow-2xl hover:translate-x-4 hover:cursor-pointer">
     <div class="flex">
       <div class="title flex flex-col">
         <h2 class="text-lg font-inder">{{ title }}</h2>
-        <h3 v-if="job_taker === ''" class="text-lg font-inder text-gray-700">{{ appliers?.length }} Appliers</h3>
+        <!-- <h2 class="text-lg font-inder">{{ id }}</h2> -->
+        <h3 v-if="job_taker === '-'" class="text-lg font-inder text-gray-700">{{ (appliers?.length ?? 0) }} Appliers</h3>
         <div v-else class="flex">
           <h3 class="text-lg font-inder text-gray-700">Taken by &nbsp;</h3>
           <h3 class="text-lg font-inder text-gray-700 underline">{{ job_taker }}</h3>
@@ -12,8 +13,8 @@
 
       </div>
       <div class="status flex flex-col justify-center ml-auto">
-        <span v-if="daysLeft > 0" class="text-sm bg-cyan-500 font-inder px-2 py-1 rounded">{{ daysLeft }} days left</span>
-        <span v-else class="text-sm bg-cyan-500 font-inder px-2 py-1 rounded">{{ status }} </span>
+        <span v-if="status === ''" class="text-sm bg-cyan-500 font-inder px-2 py-1 rounded">{{ daysLeft }} days left</span>
+      <span v-else class="text-sm bg-cyan-500 font-inder px-2 py-1 rounded">{{ status }} </span>
       </div>
 
     </div>
@@ -34,7 +35,7 @@ export default {
     rewards: { type: String, default: '-' },
     requirements: { type: String, default: '-' },
     status: { type: String, default: '-' },
-    appliers: { type: String, default: '-' },
+    appliers: { type: String, default: null },
     job_taker: { type: String, default: '-' },
   },
   data() {
@@ -50,12 +51,12 @@ export default {
           description: this.description,
           deadline: this.deadline,
           payment: this.payment,
-          tags: this.tags,
+          tags: this.tags?.join(','),
           location: this.location,
           rewards: this.rewards,
-          reqs: this.requirements,
+          reqs: this.requirements?.join('//'),
           daysLeft: this.daysLeft,
-          appliers: this.appliers.join(','),
+          appliers: this.appliers?.join(','),
           job_taker: this.job_taker,
         }
       });
