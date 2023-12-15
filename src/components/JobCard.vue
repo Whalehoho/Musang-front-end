@@ -7,14 +7,14 @@
       <span v-if="status === ''" class="text-sm bg-cyan-500 font-inder px-2 py-1 rounded">{{ daysLeft }} days left</span>
       <span v-else class="text-sm bg-cyan-500 font-inder px-2 py-1 rounded">{{ status }} </span>
     </div>
-    <p class="text-gray-800 font-cardo text-lg mb-4 overflow-auto max-h-24">
+    <p class="text-gray-800 font-cardo text-lg mb-4 word-break overflow-x-hidden overflow-y-auto max-h-24">
       {{ description }}
     </p>
     <!-- Horizontal Line -->
     <hr class="my-2 mx-3 border-emerald-800 opacity-50" />
 
     <ul
-      class="marker:text-emerald-800 list-inside list-disc font-cardo text-base text-gray-600 mb-4 overflow-auto max-h-12">
+      class="marker:text-emerald-800 list-inside list-disc font-cardo text-base text-gray-600 mb-4 overflow-y-auto max-h-12">
       <li v-for="(req, index) in reqlist" :key="index">{{ req }}</li>
     </ul>
     <div class="flex justify-between items-center">

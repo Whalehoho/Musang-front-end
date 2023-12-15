@@ -1,26 +1,41 @@
 <template>
     <div class="flex flex-col w-full space-y-20">
         <div class="flex flex-col space-x-4">
-            <div class="flex justify-center mt-10 space-x-4">
+            <div class="flex justify-center mt-10 mb-10 space-x-4">
                 <div
                     class="profile-card w-1/2 min-h-[800px] flex flex-col items-start glassmorphic-frame rounded-lg shadow-2xl h-fit">
-                    <div class="flex top-0 w-full items-start space-x-4 p-4">
+                    <div class="flex top-0 h-full w-full items-start space-x-4 p-4">
                         <img :src="getUserPicture()"
                             class="ProfileImage rounded-lg w-1/4 opacity-90 flex-shrink-0 flex-grow-0" />
                         <!-- <img :src="def_profile" class="ProfileImage rounded-full w-1/6" /> -->
-                        <div class="flex flex-col">
+                        <div class="flex flex-col w-full h-full">
                             <span v-if="!loggedIn" class="text-2xl font-cardo_bold">--</span>
                             <div v-else>
                                 <!-- Content shown after the user has logged in -->
                                 <p class="text-2xl font-cardo_bold">{{ user_data.value?.name }}</p>
                             </div>
                             <span v-if="!loggedIn" class="text-2xl font-cardo_bold">--</span>
-                            <div v-else>
+                            <div v-else class="w-full h-full">
                                 <!-- Content shown after the user has logged in -->
-                                <p class="text-2xl font-cardo text-gray-900 mb-4">{{ user_data.value?.email }}</p>
-                                <p class="text-xl font-cardo  text-gray-800 text-justify">"{{ user_data.value?.self_intro}}"</p>
-                                <div class="w-full flex justify-end">
-                                    <button  class="text-xs bg-emerald-300 font-inder px-2 py-1 rounded hover:bg-emerald-500">add description</button>  
+                                <p v-if="!isEditing" class="text-2xl font-cardo text-gray-900 mb-4">{{
+                                    user_data.value?.email }}</p>
+                                <div v-if="!isEditing" class="text-xl font-cardo text-gray-800 text-justify">
+                                    "{{ user_data.value?.self_intro }}"
+                                </div>
+                                <form v-else @submit.prevent="updateDescription" class="w-full h-full">
+                                    <textarea v-model="editingIntro"
+                                        class="w-full min-h-[200px] font-cardo p-2 border rounded-lg shadow-lg "></textarea>
+
+                                    <button type="submit"
+                                        class="text-xs bg-emerald-300 font-inder px-2 py-1 rounded hover:bg-emerald-500">
+                                        Save
+                                    </button>
+                                </form>
+                                <div v-if="!isEditing" class="w-full flex justify-end">
+                                    <button @click="editDescription"
+                                        class="text-xs bg-emerald-300 font-inder px-2 py-1 rounded hover:bg-emerald-500">
+                                        add description
+                                    </button>
                                 </div>
 
                             </div>
@@ -42,30 +57,34 @@
                         </div>
 
                         <div class="flex flex-col h-[500px]">
-                            <div class="flex flex-col items-center  overflow-auto">
-                                <div v-if="currentStep===0" class="flex flex-col items-center space-y-10 mb-10">
+                            <div class="flex flex-col items-center overflow-x-hidden overflow-y-auto">
+                                <div v-if="currentStep === 0" class="flex flex-col items-center space-y-10 mb-10">
                                     <!-- <p>{{ user_data.value }}</p> -->
                                     <JobCard v-for="job in jobs" :key="job['id']" :title="job['Project Title']"
                                         :description="job['Description']" :deadline="job['Closing Date']"
                                         :payment="job['Payment Method']" :tags="job['Tags']" :location="job['Location']"
-                                        :rewards="Math.floor(job['Rewards'])" :requirements="job['Requirements']" :status="job['Status']" :client="job['Client']"/>
+                                        :rewards="Math.floor(job['Rewards'])" :requirements="job['Requirements']"
+                                        :status="job['Status']" :client="job['Client']"
+                                        class="overflow-x-hidden max-w-[800px]" />
                                 </div>
 
-                                <div v-if="currentStep===1" class="flex flex-col items-center space-y-10 mb-10">
+                                <div v-if="currentStep === 1" class="flex flex-col items-center space-y-10 mb-10">
                                     <!-- <p>{{ user_data.value }}</p> -->
-                                    <MyProjectCard v-for="job in projects" :key="job['_id']" :id="job['_id']" :title="job['Project Title']"
-                                        :description="job['Description']" :deadline="job['Closing Date']"
-                                        :payment="job['Payment Method']" :tags="job['Tags']" :location="job['Location']"
-                                        :rewards="Math.floor(job['Rewards'])" :requirements="job['Requirements']" :status="job['Status']" 
-                                        :appliers="job['Appliers']" :job_taker="job['Job Taker']"/>
+                                    <MyProjectCard v-for="job in projects" :key="job['_id']" :id="job['_id']"
+                                        :title="job['Project Title']" :description="job['Description']"
+                                        :deadline="job['Closing Date']" :payment="job['Payment Method']" :tags="job['Tags']"
+                                        :location="job['Location']" :rewards="Math.floor(job['Rewards'])"
+                                        :requirements="job['Requirements']" :status="job['Status']"
+                                        :appliers="job['Appliers']" :job_taker="job['Job Taker']" class="min-w-[600px]" />
                                 </div>
 
-                                <div v-if="currentStep===2" class="flex flex-col items-center space-y-10 mb-10">
+                                <div v-if="currentStep === 2" class="flex flex-col items-center space-y-10 mb-10">
                                     <!-- <p>{{ user_data.value }}</p> -->
                                     <JobCard v-for="job in bookmarks" :key="job['id']" :title="job['Project Title']"
                                         :description="job['Description']" :deadline="job['Closing Date']"
                                         :payment="job['Payment Method']" :tags="job['Tags']" :location="job['Location']"
-                                        :rewards="Math.floor(job['Rewards'])" :requirements="job['Requirements']" :status="job['Status']" :client="job['Client']"/>
+                                        :rewards="Math.floor(job['Rewards'])" :requirements="job['Requirements']"
+                                        :status="job['Status']" :client="job['Client']" />
                                 </div>
                             </div>
                         </div>
@@ -97,6 +116,8 @@ export default {
     data() {
         return {
             def_profile,
+            isEditing: false,
+            editingIntro: '',
             selectedButton: '',
             steps: [
                 {
@@ -118,8 +139,8 @@ export default {
             currentStep: ref(0),
             user_data: ref({}),
             jobs: [],
-            bookmarks:[],
-            projects:[],
+            bookmarks: [],
+            projects: [],
         }
     },
     created() {
@@ -134,6 +155,30 @@ export default {
     methods: {
         getUserPicture() {
             return this.user && this.user.picture ? this.user.picture : def_profile;
+        },
+        editDescription() {
+            this.isEditing = true;
+            this.editingIntro = this.user_data.value?.self_intro || '';
+        },
+        async updateDescription() {
+            // Implement the update logic here.
+            // This could involve sending a PUT or PATCH request to your backend API.
+            // For example:
+            try {
+                // console.log(this.user_data.value?.email);
+                const response = await axios.put('https://musang-server-8d173f42ebdb.herokuapp.com/update-intro', {
+                    email: this.user_data.value?.email,
+                    self_intro: this.editingIntro,
+                });
+                if (response.status === 200) {
+                    this.user_data.value.self_intro = this.editingIntro;
+                    this.isEditing = false; // Exit editing mode after successful update
+                } else {
+                    console.error('Failed to update description');
+                }
+            } catch (error) {
+                console.error('Error updating description', error);
+            }
         },
         selectButton(button) {
             this.selectedButton = button;

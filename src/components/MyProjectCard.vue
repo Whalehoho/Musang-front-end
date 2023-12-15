@@ -1,6 +1,6 @@
 <template>
   <div @click="viewProject"
-    class="transition-transform container glassmorphic-frame  m-10 p-4  border rounded-md shadow-lg hover:shadow-2xl hover:translate-x-4 hover:cursor-pointer">
+    class="transition-transform container glassmorphic-frame  m-10 p-4 border rounded-md shadow-lg hover:shadow-2xl hover:translate-x-4 hover:cursor-pointer">
     <div class="flex">
       <div class="title flex flex-col">
         <h2 class="text-lg font-inder">{{ title }}</h2>

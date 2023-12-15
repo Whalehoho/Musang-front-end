@@ -80,7 +80,7 @@
 } 
 
 ::-webkit-scrollbar-thumb { 
-  background-color: rgb(21, 115, 85, 0.3); /* color of the scroll thumb */
+  background-color: rgba(72, 74, 75, 0.226); /* color of the scroll thumb */
   border-radius: 6px; /* roundness of the scroll thumb */
   border: 3px solid  #f0f0f088 ; /* creates padding around scroll thumb */
 }

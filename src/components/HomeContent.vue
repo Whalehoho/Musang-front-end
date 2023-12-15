@@ -49,7 +49,7 @@
         </ul>
         <div class="space-x-4">
           <button
-            class="bg-emerald-300 bg-opacity-50 h-auto text-gray-700 font-inder px-4 py-2  rounded hover:bg-cyan-200">Learn
+            class="bg-emerald-300  h-auto text-gray-700 font-inder px-4 py-2  rounded hover:bg-emerald-400">Learn
             more</button>
         </div>
       </div>

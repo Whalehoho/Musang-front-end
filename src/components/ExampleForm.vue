@@ -121,7 +121,7 @@
 
                         <div class="flex items-center justify-center">
                             <button type="submit" :disabled="!formIsValid"
-                                class="mx-auto text-2xl bg-teal-300 hover:bg-teal-400 text-black font-grover font-normal break-words rounded-lg shadow-md py-4 px-4 disabled:opacity-50 disabled:cursor-not-allowed">
+                                class="mx-auto text-2xl bg-teal-300 hover:bg-teal-400 text-black font-grover font-normal break-words rounded-lg shadow-md py-4 px-4 disabled:cursor-not-allowed">
                                 Submit
                             </button>
                         </div>
