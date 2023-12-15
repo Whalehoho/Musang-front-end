@@ -56,9 +56,10 @@
                             </button>
                         </div>
 
-                        <div class="flex flex-col h-[500px]">
-                            <div class="flex flex-col items-center overflow-x-hidden overflow-y-auto">
-                                <div v-if="currentStep === 0" class="flex flex-col items-center space-y-10 mb-10">
+                        <div class="flex flex-col min-h-[800px]">
+                            <div v-if="currentStep === 0 || currentStep === 1"
+                                class="flex flex-col items-center overflow-x-hidden overflow-y-auto">
+                                <div v-if="currentStep === 0" class="flex flex-col items-center  mb-10">
                                     <!-- <p>{{ user_data.value }}</p> -->
                                     <JobCard v-for="job in jobs" :key="job['id']" :title="job['Project Title']"
                                         :description="job['Description']" :deadline="job['Closing Date']"
@@ -68,7 +69,7 @@
                                         class="overflow-x-hidden max-w-[800px]" />
                                 </div>
 
-                                <div v-if="currentStep === 1" class="flex flex-col items-center space-y-10 mb-10">
+                                <div v-if="currentStep === 1" class="flex flex-col items-center  mb-10">
                                     <!-- <p>{{ user_data.value }}</p> -->
                                     <MyProjectCard v-for="job in projects" :key="job['_id']" :id="job['_id']"
                                         :title="job['Project Title']" :description="job['Description']"
@@ -78,13 +79,16 @@
                                         :appliers="job['Appliers']" :job_taker="job['Job Taker']" class="min-w-[600px]" />
                                 </div>
 
-                                <div v-if="currentStep === 2" class="flex flex-col items-center space-y-10 mb-10">
-                                    <!-- <p>{{ user_data.value }}</p> -->
-                                    <JobCard v-for="job in bookmarks" :key="job['id']" :title="job['Project Title']"
-                                        :description="job['Description']" :deadline="job['Closing Date']"
-                                        :payment="job['Payment Method']" :tags="job['Tags']" :location="job['Location']"
-                                        :rewards="Math.floor(job['Rewards'])" :requirements="job['Requirements']"
-                                        :status="job['Status']" :client="job['Client']" />
+                            </div>
+                            <div v-else class="flex flex-col items-center  m-10">
+                                <div v-if="currentStep === 2" class="flex flex-col items-center ">
+                                    <div v-if="pdfData" class="pdf-container">
+                                        <iframe :src="pdfSrc" class="w-[900px] h-[900px] mb-10"></iframe>
+                                    </div>
+                                    <div>
+                                        <input type="file" @change="selectFile" accept="application/pdf" />
+                                        <button @click="uploadPortfolio">Upload</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -116,6 +120,9 @@ export default {
     data() {
         return {
             def_profile,
+            selectedFile: null,
+            pdfData: null, // Store the base64 PDF data
+            // pdfURL: null,
             isEditing: false,
             editingIntro: '',
             selectedButton: '',
@@ -131,7 +138,7 @@ export default {
                     component: 'projects',
                 },
                 {
-                    label: 'Bookmarks',
+                    label: 'Portfolio',
                     svg: svg3,
                     component: 'bookmarks',
                 }
@@ -150,9 +157,23 @@ export default {
     },
     mounted() {
         this.fetchUser(this.user?.email);
-
+        this.fetchPDF(); // Fetch the PDF when the component is mounted
+        // this.displayPDF();
     },
     methods: {
+        // displayPDF() {
+        //     const pdfData = this.pdfData; // your base64 string
+        //     const binaryString = window.atob(pdfData);
+        //     const len = binaryString.length;
+        //     const bytes = new Uint8Array(len);
+        //     for (let i = 0; i < len; i++) {
+        //         bytes[i] = binaryString.charCodeAt(i);
+        //     }
+        //     const blob = new Blob([bytes], { type: 'application/pdf' });
+        //     const url = window.URL.createObjectURL(blob);
+        //     this.pdfURL = url; // Use this URL as the src for the iframe
+        //     console.log(url);
+        // },
         getUserPicture() {
             return this.user && this.user.picture ? this.user.picture : def_profile;
         },
@@ -209,11 +230,11 @@ export default {
                 });
         },
         fetchJobs(jobIds) {
-            console.log(jobIds);
+            // console.log(jobIds);
             // Convert the array of job IDs into a comma-separated string
             jobIds = Array.isArray(jobIds) ? jobIds : ['-'];
             const idsParam = jobIds.join(',');
-            console.log(idsParam);
+            // console.log(idsParam);
 
             axios.get(`https://musang-server-8d173f42ebdb.herokuapp.com/jobs/${idsParam}`)
                 .then(response => {
@@ -227,11 +248,11 @@ export default {
                 });
         },
         fetchBookmarks(jobIds) {
-            console.log(jobIds);
+            // console.log(jobIds);
             // Convert the array of job IDs into a comma-separated string
             jobIds = Array.isArray(jobIds) ? jobIds : ['-'];
             const idsParam = jobIds.join(',');
-            console.log(idsParam);
+            // console.log(idsParam);
 
             axios.get(`https://musang-server-8d173f42ebdb.herokuapp.com/jobs/${idsParam}`)
                 .then(response => {
@@ -245,11 +266,11 @@ export default {
                 });
         },
         fetchProjects(jobIds) {
-            console.log(jobIds);
+            // console.log(jobIds);
             // Convert the array of job IDs into a comma-separated string
             jobIds = Array.isArray(jobIds) ? jobIds : ['-'];
             const idsParam = jobIds.join(',');
-            console.log(idsParam);
+            // console.log(idsParam);
 
             axios.get(`https://musang-server-8d173f42ebdb.herokuapp.com/jobs/${idsParam}`)
                 .then(response => {
@@ -262,9 +283,55 @@ export default {
                     console.error('Error fetching projects:', error);
                 });
         },
+        selectFile(event) {
+            const file = event.target.files[0];
+            if (file && file.type === 'application/pdf') {
+                this.selectedFile = file;
+            } else {
+                alert('Please select a PDF file.');
+            }
+        },
+        async uploadPortfolio() {
+            if (!this.selectedFile) {
+                alert('Please select a file to upload.');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('portfolio', this.selectedFile);
+
+            const userEmail = this.user_data.value?.email;
+            formData.append('email', userEmail);
+
+            try {
+                const response = await axios.post('https://musang-server-8d173f42ebdb.herokuapp.com/upload-portfolio', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+                console.log('Upload successful', response.data);
+                alert('Upload successful')
+            } catch (error) {
+                console.error('Upload failed', error);
+            }
+        },
+        async fetchPDF() {
+            try {
+                const userEmail = this.$store.state.user.email;
+                console.log(userEmail);
+                const response = await axios.get(`https://musang-server-8d173f42ebdb.herokuapp.com/get-portfolio/${userEmail}`);
+                this.pdfData = response.data; // Assuming the response contains the base64 PDF data
+                // console.log('pdf', this.pdfData);
+            } catch (error) {
+                console.error('Error fetching PDF', error);
+            }
+        },
     },
     computed: {
-        ...mapState(['user', 'loggedIn']) // 'user' and 'otherState' are Vuex state properties
+        ...mapState(['user', 'loggedIn']), // 'user' and 'otherState' are Vuex state properties
+        pdfSrc() {
+            return `data:application/pdf;base64,${this.pdfData}`;
+        },
     },
 }
 </script>
@@ -274,12 +341,12 @@ export default {
     /* Define your active button styles here */
     /* Add a solid black bottom border */
     border-bottom: 8px solid DarkSlateGray;
-
     /* Remove other borders */
     border-top: none;
     border-left: none;
     border-right: none;
-
-
 }
-</style>
+
+.pdf-container {
+  
+}</style>
