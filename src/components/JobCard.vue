@@ -42,7 +42,7 @@ export default {
     location: { type: String, default: '-' },
     rewards: { type: String, default: '-' },
     requirements: { type: String, default: '-' },
-    status: { type: String, default: '-' },
+    status: { type: String, default: '' },
     client: { type: String, default: '-' },
   },
   data() {

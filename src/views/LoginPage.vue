@@ -1,6 +1,6 @@
 <template>
   <div
-    class="login-page flex h-screen items-center justify-center gap-20 p-20 border border-black bg-gradient-to-b from-cyan-500 to-emerald-400">
+    class="login-page flex h-screen items-center justify-center gap-20 p-20 border border-black bg-gradient-to-b from-white to-slate-400 ">
     <!-- Logo Section -->
     <!-- <div class="flex-1 flex justify-center items-center w-16 p-2">
       <img :src="logo" alt="Musang Logo" class="h-70 object-cover " />

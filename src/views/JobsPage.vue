@@ -1,6 +1,6 @@
 <template>
   <div
-    class="layout flex flex-col  h-screen items-center  gap-20 pt-20 border border-black bg-gradient-to-b from-slate-400 to-slate-100">
+    class="layout flex flex-col  h-screen items-center  gap-20 pt-20 border border-black bg-gradient-to-b from-white to-slate-400 ">
     <NavigationBar />
     <div class=" w-screen  space-y-10 overflow-auto">
       <JobCard v-for="job in jobs" :key="job['_id']" :id = "job['_id']" :title="job['Project Title']" :description="job['Description']"

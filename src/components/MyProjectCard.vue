@@ -34,7 +34,7 @@ export default {
     location: { type: String, default: '-' },
     rewards: { type: String, default: '-' },
     requirements: { type: String, default: '-' },
-    status: { type: String, default: '-' },
+    status: { type: String, default: '' },
     appliers: { type: String, default: null },
     job_taker: { type: String, default: '-' },
   },
