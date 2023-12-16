@@ -17,6 +17,7 @@
   },
     data() {
       return {
+        //url link to ViewPdf.vue
         qrCodeUrl: `https://whalehoho.github.io/Musang-front-end/view-pdf/${this.id}`,
       };
     },
