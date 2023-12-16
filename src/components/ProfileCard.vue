@@ -86,10 +86,12 @@
                                         <input type="file" @change="selectFile" accept="application/pdf" class="flex flex-col"/>
                                         <button @click="uploadPortfolio" class="text-sm bg-gray-100 px-2 py-1 rounded-sm border border-solid border-black hover:bg-gray-200">Upload</button>
                                     </div>
-                                    <div v-if="pdfData" class="pdf-container rounded-lg">
+                                    <div v-if="pdfData" class="pdf-container rounded-lg mb-10">
                                         <iframe :src="pdfSrc" class="w-[900px] h-[900px]  rounded-lg"></iframe>
                                     </div>
-                                    
+                                    <div>
+                                        <PdfLinker :id="this.user?.email"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -112,11 +114,12 @@ import svg2 from '../assets/file-document-svgrepo-com.svg';
 import svg3 from '../assets/bookmark-svgrepo-com.svg';
 import JobCard from '../components/JobCard.vue';
 import MyProjectCard from '../components/MyProjectCard.vue';
+import PdfLinker from '../components/PdfLinker.vue';
 
 export default {
     name: 'ProfileCard',
     components: {
-        JobCard, MyProjectCard,
+        JobCard, MyProjectCard, PdfLinker,
     },
     data() {
         return {
@@ -329,7 +332,7 @@ export default {
                 console.log(userEmail);
                 const response = await axios.get(`https://musang-server-8d173f42ebdb.herokuapp.com/get-portfolio/${userEmail}`);
                 this.pdfData = response.data; // Assuming the response contains the base64 PDF data
-                // console.log('pdf', this.pdfData);
+                console.log('pdf', this.pdfData);
             } catch (error) {
                 console.error('Error fetching PDF', error);
             }

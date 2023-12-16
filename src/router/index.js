@@ -6,9 +6,15 @@ import ProjectPage from '../views/ProjectPage.vue';
 import HirePage from '../views/HirePage.vue';
 import ProfilePage from '../views/ProfilePage.vue';
 import MyProjectPage from '../views/MyProjectPage.vue';
+import ViewPdf from '../views/ViewPdf.vue';
 
 // Define routes for the application
 const routes = [
+  {
+    path: '/view-pdf/:id',
+    name: 'view-pdf',
+    component: ViewPdf
+  },
   {
     path: '/l',
     name:'Login',
