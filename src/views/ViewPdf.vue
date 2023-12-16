@@ -1,8 +1,8 @@
 <template>
     <div>
         <!-- Your content here -->
-        <div v-if="pdfData" class="pdf-container rounded-lg mb-10">
-            <iframe :src="pdfSrc" class="w-[900px] h-[900px]  rounded-lg"></iframe>
+        <div v-if="pdfData" class="pdf-container w-full h-full rounded-lg mb-10">
+            <iframe :src="pdfSrc" class="w-full h-full  rounded-lg"></iframe>
         </div>
     </div>
 </template>
