@@ -27,7 +27,7 @@ export default {
     methods: {
         async fetchPDF() {
             try {
-                const userEmail = this.$store.state.user.email;
+                const userEmail = this.$route.params.id;
                 console.log(userEmail);
                 const response = await axios.get(`https://musang-server-8d173f42ebdb.herokuapp.com/get-portfolio/${userEmail}`);
                 this.pdfData = response.data; // Assuming the response contains the base64 PDF data
