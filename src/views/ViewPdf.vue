@@ -1,8 +1,7 @@
 <template>
-    <div>
-        <!-- Your content here -->
-        <div v-if="pdfData" class="pdf-container w-full h-full rounded-lg mb-10">
-            <iframe :src="pdfSrc" class="w-full h-full  rounded-lg"></iframe>
+     <div class="pdf-wrapper">
+        <div v-if="pdfData" class="pdf-container">
+            <iframe :src="pdfSrc" class="pdf-iframe"></iframe>
         </div>
     </div>
 </template>
@@ -71,3 +70,28 @@ export default {
 };
 </script>
   
+<style>
+.pdf-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    width: 100%; /* Full viewport width */
+    padding: 20px; /* Add some padding if needed */
+}
+
+.pdf-container {
+    width: 100%; /* Adjust width as needed, e.g., 80% for a centered view */
+    max-width: 1000px; /* Maximum width */
+    height: 100%; /* Full container height */
+    overflow: hidden; /* Hide overflow */
+    border-radius: 15px; /* Rounded corners for aesthetics */
+}
+
+.pdf-iframe {
+    width: 100%; /* Full width of the container */
+    height: 100%; /* Full height of the container */
+    border: none; /* Remove iframe border */
+    border-radius: 15px; /* Match container's rounded corners */
+}
+</style>
