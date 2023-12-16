@@ -62,6 +62,9 @@ export default {
             // return this.user_data && this.user_data.value?.picture ? this.user_data.value?.picture : def_profile;
         },
         fetchUser(userEmail) {
+            if(userEmail === null){
+                return;
+            }
             // Encode the email to handle special characters
             const encodedEmail = encodeURIComponent(userEmail);
             // const encodedEmail = userEmail;

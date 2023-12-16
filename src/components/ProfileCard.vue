@@ -216,6 +216,9 @@ export default {
             this.selectedButton = button;
         },
         fetchUser(userEmail) {
+            if(userEmail === null){
+                return;
+            }
             // Encode the email to handle special characters
             const encodedEmail = encodeURIComponent(userEmail);
             // const encodedEmail = userEmail;
