@@ -216,6 +216,7 @@ export default {
             this.selectedButton = button;
         },
         fetchUser(userEmail) {
+            console.log(userEmail);
             if(userEmail === null){
                 return;
             }

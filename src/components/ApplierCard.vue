@@ -62,6 +62,7 @@ export default {
             // return this.user_data && this.user_data.value?.picture ? this.user_data.value?.picture : def_profile;
         },
         fetchUser(userEmail) {
+            console.log(userEmail);
             if(userEmail === null){
                 return;
             }
