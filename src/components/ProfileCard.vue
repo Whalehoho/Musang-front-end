@@ -82,9 +82,9 @@
                             </div>
                             <div v-else class="flex flex-col items-center  m-10">
                                 <div v-if="currentStep === 2" class="flex flex-col items-center rounded-lg">
-                                    <div class="mb-10">
-                                        <input type="file" @change="selectFile" accept="application/pdf" />
-                                        <button @click="uploadPortfolio">Upload</button>
+                                    <div class="mb-10 flex  justify-center items-center space-y-2">
+                                        <input type="file" @change="selectFile" accept="application/pdf" class="flex flex-col"/>
+                                        <button @click="uploadPortfolio" class="text-sm bg-gray-100 px-2 py-1 rounded-sm border border-solid border-black hover:bg-gray-200">Upload</button>
                                     </div>
                                     <div v-if="pdfData" class="pdf-container rounded-lg">
                                         <iframe :src="pdfSrc" class="w-[900px] h-[900px]  rounded-lg"></iframe>
