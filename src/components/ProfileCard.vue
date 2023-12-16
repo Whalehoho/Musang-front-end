@@ -81,9 +81,9 @@
 
                             </div>
                             <div v-else class="flex flex-col items-center  m-10">
-                                <div v-if="currentStep === 2" class="flex flex-col items-center ">
-                                    <div v-if="pdfData" class="pdf-container">
-                                        <iframe :src="pdfSrc" class="w-[900px] h-[900px] mb-10"></iframe>
+                                <div v-if="currentStep === 2" class="flex flex-col items-center rounded-lg">
+                                    <div v-if="pdfData" class="pdf-container rounded-lg">
+                                        <iframe :src="pdfSrc" class="w-[900px] h-[900px] mb-10 rounded-lg"></iframe>
                                     </div>
                                     <div>
                                         <input type="file" @change="selectFile" accept="application/pdf" />
@@ -175,7 +175,14 @@ export default {
         //     console.log(url);
         // },
         getUserPicture() {
-            return this.user && this.user.picture ? this.user.picture : def_profile;
+            let pictureUrl = this.user?.picture;
+            if(pictureUrl != null){
+                pictureUrl = pictureUrl.replace(/=s\d+-c/, '=s2048-c');
+            if (!pictureUrl.includes('=s')) {
+                pictureUrl += '=s2048-c';
+            }
+            }
+            return this.user && this.user.picture ? pictureUrl : def_profile;
         },
         editDescription() {
             this.isEditing = true;
@@ -347,6 +354,11 @@ export default {
     border-right: none;
 }
 
-.pdf-container {
-  
-}</style>
+/* .ProfileImage {
+  image-rendering: -webkit-optimize-contrast; 
+  image-rendering: crisp-edges; 
+  image-rendering: -moz-crisp-edges; 
+  image-rendering: pixelated; 
+} */
+.pdf-container {}
+</style>

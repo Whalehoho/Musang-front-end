@@ -1,5 +1,6 @@
 <template>
-    <div class="applier-profile-card w-full min-h-[200px] flex flex-col items-start glassmorphic-frame rounded-lg shadow-2xl h-fit">
+    <div
+        class="applier-profile-card w-full min-h-[900px] flex flex-col items-start glassmorphic-frame rounded-lg shadow-2xl h-full">
         <div class="flex top-0 w-full items-start space-x-4 p-4">
             <img :src="getUserPicture()" class="ProfileImage rounded-full w-1/6 opacity-90 flex-shrink-0 flex-grow-0" />
             <div class="flex flex-col">
@@ -7,6 +8,10 @@
                 <p class="text-xl font-cardo text-gray-900 mb-4">{{ user_data.value?.email }}</p>
                 <p class="text-lg font-cardo  text-gray-800 text-justify">{{ user_data.value?.self_intro }}</p>
             </div>
+
+        </div>
+        <div v-if="pdfData" class="pdf-container rounded-lg w-full h-[900px]">
+            <iframe :src="pdfSrc" class="w-full h-full p-5 mb-10 rounded-lg"></iframe>
         </div>
     </div>
 </template>
@@ -29,6 +34,7 @@ export default {
             jobs: [],
             bookmarks: [],
             projects: [],
+            pdfData: null, // Store the base64 PDF data
         }
     },
     created() {
@@ -36,10 +42,24 @@ export default {
     },
     mounted() {
         this.fetchUser(this.email);
+        this.fetchPDF();
+    },
+    computed: {
+        pdfSrc() {
+            return `data:application/pdf;base64,${this.pdfData}`;
+        },
     },
     methods: {
         getUserPicture() {
-            return this.user_data && this.user_data.value?.picture ? this.user_data.value?.picture : def_profile;
+            let pictureUrl =  this.user_data.value?.picture;
+            if (pictureUrl != null) {
+                pictureUrl = pictureUrl.replace(/=s\d+-c/, '=s2048-c');
+                if (!pictureUrl.includes('=s')) {
+                    pictureUrl += '=s2048-c';
+                }
+            }
+            return this.user_data && this.user_data.value?.picture ? pictureUrl : def_profile;
+            // return this.user_data && this.user_data.value?.picture ? this.user_data.value?.picture : def_profile;
         },
         fetchUser(userEmail) {
             // Encode the email to handle special characters
@@ -119,6 +139,17 @@ export default {
                 .catch(error => {
                     console.error('Error fetching projects:', error);
                 });
+        },
+        async fetchPDF() {
+            try {
+                const userEmail = this.email;
+                console.log(userEmail);
+                const response = await axios.get(`https://musang-server-8d173f42ebdb.herokuapp.com/get-portfolio/${userEmail}`);
+                this.pdfData = response.data; // Assuming the response contains the base64 PDF data
+                // console.log('pdf', this.pdfData);
+            } catch (error) {
+                console.error('Error fetching PDF', error);
+            }
         },
     },
 }
