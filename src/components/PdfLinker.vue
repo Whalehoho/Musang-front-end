@@ -17,7 +17,7 @@
   },
     data() {
       return {
-        qrCodeUrl: `https://localhost:8080/view-pdf/${this.id}`,
+        qrCodeUrl: `https://whalehoho.github.io/Musang-front-end/view-pdf/${this.id}`,
       };
     },
     mounted() {
