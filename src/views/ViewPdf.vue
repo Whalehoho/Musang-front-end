@@ -17,7 +17,7 @@ export default {
         }
     },
     mounted() {
-        this.fetchAndOpenPDF();
+        this.fetchPDF();
     },
     computed:{
         pdfSrc() {
