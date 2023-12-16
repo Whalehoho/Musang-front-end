@@ -82,13 +82,14 @@
                             </div>
                             <div v-else class="flex flex-col items-center  m-10">
                                 <div v-if="currentStep === 2" class="flex flex-col items-center rounded-lg">
-                                    <div v-if="pdfData" class="pdf-container rounded-lg">
-                                        <iframe :src="pdfSrc" class="w-[900px] h-[900px] mb-10 rounded-lg"></iframe>
-                                    </div>
-                                    <div>
+                                    <div class="mb-10">
                                         <input type="file" @change="selectFile" accept="application/pdf" />
                                         <button @click="uploadPortfolio">Upload</button>
                                     </div>
+                                    <div v-if="pdfData" class="pdf-container rounded-lg">
+                                        <iframe :src="pdfSrc" class="w-[900px] h-[900px]  rounded-lg"></iframe>
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -176,11 +177,11 @@ export default {
         // },
         getUserPicture() {
             let pictureUrl = this.user?.picture;
-            if(pictureUrl != null){
+            if (pictureUrl != null) {
                 pictureUrl = pictureUrl.replace(/=s\d+-c/, '=s2048-c');
-            if (!pictureUrl.includes('=s')) {
-                pictureUrl += '=s2048-c';
-            }
+                if (!pictureUrl.includes('=s')) {
+                    pictureUrl += '=s2048-c';
+                }
             }
             return this.user && this.user.picture ? pictureUrl : def_profile;
         },
