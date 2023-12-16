@@ -333,10 +333,10 @@ export default {
         async fetchPDF() {
             try {
                 const userEmail = this.$store.state.user.email;
-                console.log(userEmail);
+                // console.log(userEmail);
                 const response = await axios.get(`https://musang-server-8d173f42ebdb.herokuapp.com/get-portfolio/${userEmail}`);
                 this.pdfData = response.data; // Assuming the response contains the base64 PDF data
-                console.log('pdf', this.pdfData);
+                // console.log('pdf', this.pdfData);
             } catch (error) {
                 console.error('Error fetching PDF', error);
             }
