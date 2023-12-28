@@ -29,7 +29,7 @@
     <!-- <div class="Searchframe w-96 h-16 mx-64 px-14 py-2.5 justify-center items-center gap-2.5 inline-flex">
       <div class="Searchbar w-96 h-8 relative bg-white rounded-2xl border border-black border-opacity-30"></div>
     </div> -->
-    <div class="Searchframe w-96 h-full mx-64 flex items-center">
+    <div class="Searchframe w-96 h-full  flex items-center">
       <div
         class="Searchbar w-full h-3/5 relative bg-white rounded-full shadow-lg border border-black border-opacity-30 flex items-center ">
         <input type="search" placeholder="Search Industries"
