@@ -87,7 +87,7 @@
                                         <button @click="uploadPortfolio" class="text-sm bg-gray-100 px-2 py-1 rounded-sm border border-solid border-black hover:bg-gray-200">Upload</button>
                                     </div>
                                     <div v-if="pdfData" class="pdf-container rounded-lg mb-10">
-                                        <iframe :src="pdfSrc" class="w-[900px] h-[900px]  rounded-lg"></iframe>
+                                        <iframe :src="pdfSrc" class="w-full h-[900px]  rounded-lg"></iframe>
                                     </div>
                                     <div>
                                         <PdfLinker :id="this.user?.email"/>
