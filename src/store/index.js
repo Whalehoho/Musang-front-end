@@ -1,7 +1,12 @@
 // store.js
 import Vuex from 'vuex';
 import axios from 'axios';
+import VuexPersist from 'vuex-persist';
 
+const vuexPersist = new VuexPersist({
+  key: 'my-app',
+  storage: window.localStorage
+});
 
 export default new Vuex.Store({
   state: {
@@ -43,5 +48,5 @@ export default new Vuex.Store({
       }
     }
   },
-
+  plugins: [vuexPersist.plugin],
 });   

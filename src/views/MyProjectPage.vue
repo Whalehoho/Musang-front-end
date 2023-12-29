@@ -101,7 +101,7 @@
             </ul>
           </div>
           <div class="flex flex-col space-y-4  justify-center items-start ">
-            <button @click="apply" type="submit"
+            <button @click="withdrawlProject" type="submit"
               class="w-[200px] text-xl bg-red-400 hover:bg-red-500 text-black font-grover font-normal break-words rounded-lg shadow-md py-4 px-2 ">
               Withdrawl Project
             </button>
@@ -170,7 +170,44 @@ export default {
       // Handle the error scenario
       console.error('Error choosing applier:', error);
     }
-  }
+  },
+  async withdrawlProject() {
+    try {
+      
+      const userEmail = this.$store.state.user.email;
+      const projectId = this.id;
+
+      await axios.patch('https://musang-server-8d173f42ebdb.herokuapp.com/withdrawl-project', {
+        userEmail,
+        projectId,
+      });
+
+      // Handle the success response, e.g., show a notification or update local state
+      alert('Project has been withdrawn.');
+    } catch (error) {
+      // Handle the error scenario
+      console.error('Error withdraw project:', error);
+    }
+  },
+  async closeProject() {
+    try {
+      
+      const userEmail = this.$store.state.user.email;
+      const projectId = this.id;
+
+      await axios.patch('https://musang-server-8d173f42ebdb.herokuapp.com/close-project', {
+        userEmail,
+        projectId,
+        newStatus: 'closed'
+      });
+
+      // Handle the success response, e.g., show a notification or update local state
+      alert('Project has been closed.');
+    } catch (error) {
+      // Handle the error scenario
+      console.error('Error closing project:', error);
+    }
+  },
   },
   computed: {
     formattedDate() {
