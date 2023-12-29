@@ -55,7 +55,8 @@
 
                       </div>
                       <div class="status flex flex-col justify-center ml-auto">
-                        <button @click="chooseApplier(applier)" class="text-xs bg-emerald-300 font-inder px-2 py-1 rounded hover:bg-emerald-500">choose
+                        <button @click="chooseApplier(applier)"
+                          class="text-xs bg-emerald-300 font-inder px-2 py-1 rounded hover:bg-emerald-500">choose
                           this</button>
                       </div>
 
@@ -101,11 +102,11 @@
             </ul>
           </div>
           <div class="flex flex-col space-y-4  justify-center items-start ">
-            <button @click="withdrawlProject" type="submit"
+            <button @click="withdrawProject" type="submit"
               class="w-[200px] text-xl bg-red-400 hover:bg-red-500 text-black font-grover font-normal break-words rounded-lg shadow-md py-4 px-2 ">
-              Withdrawl Project
+              Withdraw Project
             </button>
-            <button @click="apply" type="submit"
+            <button @click="closeProject" type="submit"
               class="w-[200px] text-xl bg-emerald-400 hover:bg-emerald-500 text-black font-grover font-normal break-words rounded-lg shadow-md py-4 px-2 ">
               End Project
             </button>
@@ -152,62 +153,72 @@ export default {
       this.target = target;
     },
     async chooseApplier(applierEmail) {
-    try {
-      
-      const userEmail = this.$store.state.user.email;
-      const projectId = this.id;
 
-      await axios.patch('https://musang-server-8d173f42ebdb.herokuapp.com/assign-job', {
-        userEmail,
-        applierEmail,
-        projectId,
-        newStatus: 'in progress'
-      });
+      try {
 
-      // Handle the success response, e.g., show a notification or update local state
-      alert('Project job taker updated:',applierEmail);
-    } catch (error) {
-      // Handle the error scenario
-      console.error('Error choosing applier:', error);
-    }
-  },
-  async withdrawlProject() {
-    try {
-      
-      const userEmail = this.$store.state.user.email;
-      const projectId = this.id;
+        const userEmail = this.$store.state.user.email;
+        const projectId = this.id;
 
-      await axios.patch('https://musang-server-8d173f42ebdb.herokuapp.com/withdrawl-project', {
-        userEmail,
-        projectId,
-      });
+        await axios.patch('https://musang-server-8d173f42ebdb.herokuapp.com/assign-job', {
+          userEmail,
+          applierEmail,
+          projectId,
+          newStatus: 'in progress'
+        });
 
-      // Handle the success response, e.g., show a notification or update local state
-      alert('Project has been withdrawn.');
-    } catch (error) {
-      // Handle the error scenario
-      console.error('Error withdraw project:', error);
-    }
-  },
-  async closeProject() {
-    try {
-      
-      const userEmail = this.$store.state.user.email;
-      const projectId = this.id;
+        // Handle the success response, e.g., show a notification or update local state
+        alert('Project job taker updated:', applierEmail);
+      } catch (error) {
+        // Handle the error scenario
+        console.error('Error choosing applier:', error);
+      }
+    },
+    async withdrawProject() {
+      const confirmation = confirm("Are you sure you want to withdraw this project?");
 
-      await axios.patch('https://musang-server-8d173f42ebdb.herokuapp.com/close-project', {
-        userEmail,
-        projectId,
-        newStatus: 'closed'
-      });
+      if (!confirmation) {
+        return; // Exit the function if the user clicks 'Cancel'
+      }
+      try {
+        const userEmail = this.$store.state.user.email;
+        const projectId = this.id;
 
-      // Handle the success response, e.g., show a notification or update local state
-      alert('Project has been closed.');
-    } catch (error) {
-      // Handle the error scenario
-      console.error('Error closing project:', error);
-    }
-  },
+        await axios.delete(`https://musang-server-8d173f42ebdb.herokuapp.com/withdraw-project/${projectId}`, {
+          params: { userEmail },
+        });
+
+        // Handle the success response, e.g., show a notification or update local state
+        alert('Project has been withdrawn.');
+      } catch (error) {
+        // Handle the error scenario
+        console.error('Error withdraw project:', error);
+        alert('Error withdraw project:', error);
+      }
+    },
+    async closeProject() {
+      const confirmation = confirm("Are you sure you want to close this project?");
+
+      if (!confirmation) {
+        return; // Exit the function if the user clicks 'Cancel'
+      }
+      try {
+
+        const userEmail = this.$store.state.user.email;
+        const projectId = this.id;
+
+        await axios.patch('https://musang-server-8d173f42ebdb.herokuapp.com/close-project', {
+          userEmail,
+          projectId,
+          newStatus: 'closed'
+        });
+
+        // Handle the success response, e.g., show a notification or update local state
+        alert('Project has been closed.');
+      } catch (error) {
+        // Handle the error scenario
+        console.error('Error closing project:', error);
+      }
+    },
   },
   computed: {
     formattedDate() {
