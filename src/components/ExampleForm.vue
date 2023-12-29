@@ -25,7 +25,7 @@
                     </div>
 
                     <!-- Project Info -->
-                    <div v-if="currentStep === 0" class="flex flex-col  font-fatface  text-2xl m-4 px-16 space-y-4 h-fit">
+                    <div v-if="currentStep === 0" class="flex flex-col  font-fatface w-full text-2xl m-4 px-16 space-y-4 h-fit">
                         <FormKit type="text" placeholder="Give your project a title." validation="required"
                             v-model="formData.projectInfo.title"
                             input-class="flex p-4 font-cardo w-full rounded-lg shadow-lg" :validation-messages="{
@@ -40,22 +40,24 @@
                                 max: '*No more than 10 tags can be selected.'
                             }" validation-visibility="live" message-class="text-red-600 font-bold text-lg m-2" />
 
-                        <div class="flex flex-col">
+                        <div class="flex flex-col overflow-auto">
                             <span class="mb-2">Requirements:</span>
-                            <div v-for="(requirement, index) in requirements" :key="index" class="flex flex-col w-full">
+                            <div v-for="(requirement, index) in requirements" :key="requirement.id"
+                                class="flex  ">
                                 <FormKit type="text" :placeholder="'Requirement ' + (index + 1)"
-                                    v-model="requirements[index]" input-class="p-2 font-cardo w-full rounded-lg shadow-lg"
-                                    validation="required" :validation-messages="{
-                                        required: '*Please fill in the requirements.'
-                                    }" validation-visibility="live"
-                                    message-class="text-red-600 font-bold text-lg m-2" />
-                                <div class="flex justify-end">
-                                    <button type="button" @click="removeRequirement(index)"
-                                        class="text-lg text-gray-700 hover:text-cyan-700"> &lt;Remove&gt;</button>
-                                </div>
+                                    v-model="requirements[index].value"
+                                    input-class="p-2 mb-2 font-cardo flex-grow w-[700px] rounded-lg shadow-lg"
+                                    validation="required"
+                                    :validation-messages="{ required: '*Please fill in the requirements.' }"
+                                    validation-visibility="live" message-class="text-red-600 font-bold text-lg mb-2">
+                                </FormKit>
+                                <button @click="removeRequirement(index)" class="ml-2 flex-shrink">
+                                    <img :src="trash" style="width:25px; height:25px;">
+                                </button>
                             </div>
-                            <button type="button" @click="addRequirement" class="text-xl text-gray-700 hover:text-cyan-700">
-                                &lt;Add Requirement&gt;</button>
+                            <button type="button" @click="addRequirement"
+                                class="mx-auto text-2xl bg-teal-300 hover:bg-teal-400 text-black font-grover font-normal break-words rounded-lg shadow-md mt-2 py-4 px-4 disabled:opacity-50">
+                                Add Requirement</button>
                         </div>
 
                         <div class="flex flex-col overflow-auto">
@@ -82,8 +84,7 @@
                         <div class="flex flex-col">
                             <span class="mb-2">Choose a Payment Method:</span>
                             <FormKit type="select" v-model="formData.ReInfo.payment" :options="paymentMethods"
-                            placeholder=" "
-                                input-class="w-full font-cardo p-2 border rounded-lg shadow-lg" />
+                                placeholder=" " input-class="w-full font-cardo p-2 border rounded-lg shadow-lg" />
                         </div>
 
                         <div class="flex flex-col">
@@ -107,8 +108,7 @@
                         <div class="flex flex-col">
                             <span class="mb-2">Project location:</span>
                             <FormKit type="select" v-model="formData.application.location" :options="workplace"
-                            placeholder="City/Remote"
-                                input-class="w-full font-cardo p-2 border rounded-lg shadow-lg" />
+                                placeholder="City/Remote" input-class="w-full font-cardo p-2 border rounded-lg shadow-lg" />
                         </div>
 
                         <div class="flex flex-col">
@@ -141,6 +141,7 @@ import { ref, reactive, computed } from 'vue';
 import { FormKit } from '@formkit/vue';
 import { useStore } from 'vuex';
 import pin from '../assets/pin.svg';
+import trash from '../assets/icons8-trash.svg';
 
 const store = useStore()
 const currentStep = ref(0)
@@ -151,7 +152,7 @@ const formIsValid = computed(() => {
     // For example, check if all required fields are filled
     const validity = formData.projectInfo.title.trim() !== '' &&
         formData.projectInfo.tags.length > 0 &&
-        requirements.value.every(req => req.trim() !== '') &&
+        requirements.value.every(req => req.value.trim() !== '') &&
         formData.projectInfo.description.trim() !== '' &&
         formData.ReInfo.payment.trim() !== '' &&
         formData.ReInfo.rewards && !isNaN(Number(formData.ReInfo.rewards)) &&
@@ -163,7 +164,7 @@ const formIsValid = computed(() => {
     const tagsValid = formData.projectInfo.tags.length > 0;
     console.log('Tags valid:', tagsValid);
 
-    const requirementsValid = requirements.value.every(req => req.trim() !== '');
+    const requirementsValid = requirements.value.every(req => req.value.trim() !== '');
     console.log('Requirements valid:', requirementsValid);
     console.log(requirements.value);
 
@@ -300,14 +301,18 @@ const today = computed(() => {
     return `${year}-${month}-${day}`
 })
 
-const requirements = ref(['']) // Start with one empty requirement
+const requirements = ref([{ id: generateUniqueId(), value: '' }]);
 
 const addRequirement = () => {
-    requirements.value.push('') // Add an empty requirement
-}
+    requirements.value.push({ id: generateUniqueId(), value: '' });
+};
 
 const removeRequirement = (index) => {
-    requirements.value.splice(index, 1) // Remove the requirement at the given index
+    requirements.value.splice(index, 1);
+};
+
+function generateUniqueId() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
 }
 
 
@@ -320,7 +325,7 @@ const submitForm = async () => {
             const jobData = {
                 title: formData.projectInfo.title,
                 tags: formData.projectInfo.tags,
-                requirements: requirements.value,
+                requirements: requirements.value.map(req => req.value),
                 description: formData.projectInfo.description,
                 paymentMethod: formData.ReInfo.payment,
                 rewards: formData.ReInfo.rewards,
@@ -342,7 +347,7 @@ const submitForm = async () => {
 
     } catch (error) {
         console.error('Error posting job:', error);
-        if(store.state.user === null){
+        if (store.state.user === null) {
             alert('Only logged-in user can post job.', error);
         }
         alert('Error posting job.', error);
@@ -354,5 +359,9 @@ const submitForm = async () => {
 
 </script>
     
-<style scoped></style>
+<style>
+.flex-grow {
+    flex-grow: 1; 
+}
+</style>
     

@@ -116,7 +116,7 @@ export default {
   styles do not apply because the content inserted by v-html is not processed by Vue's scoped CSS system. 
   If that happens, might need to move the styles to a global stylesheet or use deep selectors.
  -->
-<style >
+<style>
 .highlight {
   background-color: yellow;
 }

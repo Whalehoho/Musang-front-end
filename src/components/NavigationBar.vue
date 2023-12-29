@@ -2,7 +2,7 @@
   <div class="navigation-bar w-full h-20 top-0 absolute bg-transparent shadow-lg justify-between items-start inline-flex">
 
     <button @click="home" class="h-full">
-      <div class="Logoframe w-40 h-full flex-col justify-center items-center gap-2.5 inline-flex">
+      <div class="Logoframe w-40 p-4 h-full flex-col justify-center items-center gap-2.5 inline-flex">
         <img :src="logo" class="Logo" />
       </div>
     </button>
