@@ -50,6 +50,7 @@ export default {
   },
   methods: {
     highlightInTag(tag) {
+      //console.log(this.searchQuery);
     if (!this.searchQuery) return '#'+tag; // Return the tag as is if there's no search query
 
     const regex = new RegExp(`(${this.searchQuery})`, 'gi'); // Case-insensitive matching

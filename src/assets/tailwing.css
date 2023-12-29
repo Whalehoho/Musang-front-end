@@ -15,6 +15,13 @@
 }
 
 @font-face {
+  font-family: 'Waterlily';
+  src: url('./fonts/Waterlily-Script.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'Inder';
   src: url('./fonts/Inder-Regular.ttf') format('truetype');
   font-weight: normal;

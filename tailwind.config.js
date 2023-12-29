@@ -18,6 +18,7 @@ module.exports = {
         cardo: ['Cardo-Regular'],
         cardo_bold: ['Cardo-Bold'],
         cardo_italic: ['Cardo-Italic'],
+        waterlily: ['Waterlily'],
       }
     },
   },

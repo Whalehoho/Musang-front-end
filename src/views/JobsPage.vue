@@ -54,7 +54,7 @@ export default {
   computed: {
     ...mapState(['searchQuery']),
     filteredJobs() {
-      console.log(this.searchQuery);
+      // console.log(this.searchQuery);
       if (!this.searchQuery || this.searchQuery === '') {
         
       return this.jobs;
@@ -75,7 +75,5 @@ export default {
 };
 </script>
   
-<style>
 
-</style>
   

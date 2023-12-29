@@ -3,14 +3,14 @@
 
     <button @click="home" class="h-full">
       <div class="Logoframe w-40 h-full flex-col justify-center items-center gap-2.5 inline-flex">
-        <img :src="logo" class="Logo h-full" />
+        <img :src="logo" class="Logo" />
       </div>
     </button>
 
     <div class="Navigationframe justify-start items-start flex">
       <div class="Jobsframe h-20  justify-center items-center gap-2.5 flex">
         <button @click="selectButton('jobs')" type="submit"
-          class="text-2xl h-full hover:shadow-lg text-black font-grover font-normal px-8">
+          class="text-2xl h-full hover:shadow-lg text-black font-waterlily font-normal px-8">
           <div :class="{ 'active-button': selectedButton === 'jobs' }" class="flex h-full items-center">
             Find Jobs
           </div>
@@ -19,7 +19,7 @@
       </div>
       <div class="Comsframe h-20 justify-center items-center gap-2.5 flex">
         <button @click="selectButton('hire')" type="submit"
-          class="text-2xl h-full hover:shadow-lg text-black font-grover font-normal px-8">
+          class="text-2xl h-full hover:shadow-lg text-black font-waterlily font-normal px-8">
           <div :class="{ 'active-button': selectedButton === 'hire' }" class="flex h-full items-center">
             Hire Freelancers
           </div>
@@ -33,7 +33,7 @@
       <div
         class="Searchbar w-full h-3/5 relative bg-white rounded-full shadow-lg border border-black border-opacity-30 flex items-center ">
         <input type="search" v-model="searchInput" @input="updateSearchQuery" placeholder="Search Jobs..."
-          class="w-full h-full pl-4 pr-16 font-grover rounded-full focus:outline-none" />
+          class="w-full h-full pl-4 pr-16  rounded-full focus:outline-none" />
         <button type="submit" @click="jobs" class="absolute right-2.5 ">
           <span
             class="flex items-center justify-center h-10 w-10 rounded-full bg-emerald-400 bg-opacity-10 text-slate-500 hover:bg-opacity-50">
@@ -74,7 +74,7 @@ const props = defineProps({
 </script> -->
 <script>
 import { mapState, mapMutations } from 'vuex';
-import logo from '../assets/musang_logo.png';
+import logo from '../assets/musang-waterlily.png';
 import profile from '../assets/profile-user-svgrepo-com.svg';
 export default {
   name: 'NavigationBar',
