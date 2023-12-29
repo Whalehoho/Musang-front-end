@@ -32,7 +32,7 @@
     <div class="Searchframe w-96 h-full  flex items-center">
       <div
         class="Searchbar w-full h-3/5 relative bg-white rounded-full shadow-lg border border-black border-opacity-30 flex items-center ">
-        <input type="search" v-model="searchInput" @input="updateSearchQuery" placeholder="Search Jobs..."
+        <input type="search" v-model="searchInput" @input="updateSearchQuery" placeholder="Search Jobs..." @keyup.enter="jobs"
           class="w-full h-full pl-4 pr-16  rounded-full focus:outline-none" />
         <button type="submit" @click="jobs" class="absolute right-2.5 ">
           <span
@@ -124,6 +124,7 @@ export default {
   },
   mounted() {
     this.selectedButton = this.$route.query.selectedButton;
+    this.searchInput = this.searchQuery;
   }
 };
 </script>

@@ -1,14 +1,15 @@
 <template>
   <div @click="viewProject"
-    class="transition-transform  container glassmorphic-frame w-5/6 m-10 p-4 mx-14 border rounded-md shadow-lg hover:shadow-2xl hover:translate-x-4 hover:cursor-pointer" >
+    class="transition-transform  container glassmorphic-frame w-5/6 m-10 p-4 mx-14 border rounded-md shadow-lg hover:shadow-2xl hover:translate-x-4 hover:cursor-pointer">
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-lg font-inder" v-html="highlightMatch(title)"></h2>
       <!-- <h2 class="text-lg font-inder">{{ status }}</h2> -->
       <span v-if="status === ''" class="text-sm bg-cyan-500 font-inder px-2 py-1 rounded">{{ daysLeft }} days left</span>
       <span v-else class="text-sm bg-cyan-500 font-inder px-2 py-1 rounded">{{ status }} </span>
     </div>
-    <p class="text-gray-800 font-cardo text-lg mb-4 word-break overflow-x-hidden overflow-y-hidden max-h-24 " v-html="highlightMatch(description)">
-      
+    <p class="text-gray-800 font-cardo text-lg mb-4 word-break overflow-x-hidden overflow-y-hidden max-h-24 "
+      v-html="highlightMatch(description)">
+
     </p>
     <!-- Horizontal Line -->
     <!-- <hr class="my-2 mx-3 border-emerald-800 opacity-50" />
@@ -51,16 +52,16 @@ export default {
   methods: {
     highlightInTag(tag) {
       //console.log(this.searchQuery);
-    if (!this.searchQuery) return '#'+tag; // Return the tag as is if there's no search query
+      if (!this.searchQuery) return '#' + tag; // Return the tag as is if there's no search query
 
-    const regex = new RegExp(`(${this.searchQuery})`, 'gi'); // Case-insensitive matching
-    return '#'+tag.replace(regex, match => `<span class="highlight">${match}</span>`);
-  },
+      const regex = new RegExp(`(${this.searchQuery})`, 'gi'); // Case-insensitive matching
+      return '#' + tag.replace(regex, match => `<span class="highlight">${match}</span>`);
+    },
     highlightMatch(text) {
-    if (!this.searchQuery) return text; // Return original text if no search query
-    const re = new RegExp(this.searchQuery, 'gi'); // 'gi' for global and case-insensitive matching
-    return text.replace(re, match => `<span class="highlight">${match}</span>`);
-  },
+      if (!this.searchQuery) return text; // Return original text if no search query
+      const re = new RegExp(this.searchQuery, 'gi'); // 'gi' for global and case-insensitive matching
+      return text.replace(re, match => `<span class="highlight">${match}</span>`);
+    },
     viewProject() {
       this.$router.push({
         name: 'Project',
@@ -110,6 +111,11 @@ export default {
 };
 </script>
 
+<!-- 
+  If using scoped styles and v-html together, may encounter issues where 
+  styles do not apply because the content inserted by v-html is not processed by Vue's scoped CSS system. 
+  If that happens, might need to move the styles to a global stylesheet or use deep selectors.
+ -->
 <style >
 .highlight {
   background-color: yellow;
