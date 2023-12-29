@@ -110,7 +110,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style >
 .highlight {
   background-color: yellow;
 }
