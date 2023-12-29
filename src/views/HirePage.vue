@@ -1,6 +1,6 @@
 <template>
     <div
-      class="layout flex  h-screen   justify-center gap-20 pt-20 border border-black bg-gradient-to-b from-white to-slate-400 ">
+      class="layout flex  h-screen   justify-center gap-20 pt-20 border border-black bg-gradient-to-b from-blue-200 to-blue-300">
       <NavigationBar/>
       <ExampleForm/>
       </div>

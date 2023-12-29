@@ -1,6 +1,6 @@
 <template>
   <div
-    class="layout flex flex-col h-screen overflow-auto items-center justify-center gap-20 pt-20 border border-black bg-gradient-to-b from-white to-slate-400 ">
+    class="layout flex flex-col h-screen overflow-auto items-center justify-center gap-20 pt-20 border border-black bg-gradient-to-b from-blue-200 to-blue-300 ">
     <NavigationBar />
     <HomeContent/>
     </div>

@@ -5,15 +5,29 @@ import VuexPersist from 'vuex-persist';
 
 const vuexPersist = new VuexPersist({
   key: 'my-app',
-  storage: window.localStorage
+  storage: window.localStorage,
+  reducer: (state) => {
+    // Copy the state object
+    const persistedState = { ...state };
+
+    // Remove 'searchQuery' from the persisted state
+    delete persistedState.searchQuery;
+
+    // Return the modified state
+    return persistedState;
+  }
 });
 
 export default new Vuex.Store({
   state: {
     user: null,
     loggedIn: false,
+    searchQuery: '',
   },
   mutations: {
+    setSearchQuery(state, query) {
+      state.searchQuery = query;
+    },
     setUser(state, user) {
       state.user = user;
     },

@@ -9,12 +9,12 @@
 
     <div class="Navigationframe justify-start items-start flex">
       <div class="Jobsframe h-20  justify-center items-center gap-2.5 flex">
-        <button @click="selectButton('jobs')"  type="submit"
+        <button @click="selectButton('jobs')" type="submit"
           class="text-2xl h-full hover:shadow-lg text-black font-grover font-normal px-8">
           <div :class="{ 'active-button': selectedButton === 'jobs' }" class="flex h-full items-center">
             Find Jobs
           </div>
-          
+
         </button>
       </div>
       <div class="Comsframe h-20 justify-center items-center gap-2.5 flex">
@@ -32,9 +32,9 @@
     <div class="Searchframe w-96 h-full  flex items-center">
       <div
         class="Searchbar w-full h-3/5 relative bg-white rounded-full shadow-lg border border-black border-opacity-30 flex items-center ">
-        <input type="search" placeholder="Search Industries"
+        <input type="search" v-model="searchInput" @input="updateSearchQuery" placeholder="Search Jobs..."
           class="w-full h-full pl-4 pr-16 font-grover rounded-full focus:outline-none" />
-        <button type="submit" class="absolute right-2.5 ">
+        <button type="submit" @click="jobs" class="absolute right-2.5 ">
           <span
             class="flex items-center justify-center h-10 w-10 rounded-full bg-emerald-400 bg-opacity-10 text-slate-500 hover:bg-opacity-50">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -55,10 +55,10 @@
     <div class="Profileframe w-40 h-full px-7 flex justify-end items-center">
       <button @click="profile" class="Profile flex w-14 h-14 relative ">
         <!-- <div class="unselectable absolute top-0 right-0 bottom-0 left-0 rounded-full border-2 border-slate-700 -m-1 flex items-center justify-center text-black text-3xl font-grover"> -->
-          <img :src="getUserPicture()" class="ProfileImage rounded-full shadow-xl" />
-          <!-- {{ user }} -->
+        <img :src="getUserPicture()" class="ProfileImage rounded-full shadow-xl" />
+        <!-- {{ user }} -->
         <!-- </div> -->
-        </button>
+      </button>
     </div>
 
 
@@ -73,7 +73,7 @@ const props = defineProps({
 })
 </script> -->
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import logo from '../assets/musang_logo.png';
 import profile from '../assets/profile-user-svgrepo-com.svg';
 export default {
@@ -96,27 +96,33 @@ export default {
     },
     jobs() {
       // Login logic here
-      this.$router.push({ name: 'Jobs',query: { selectedButton: 'jobs' } },);
+      this.$router.push({ name: 'Jobs', query: { selectedButton: 'jobs' } },);
     },
     hire() {
       // Login logic here
-      this.$router.push({ name: 'Hire',query: { selectedButton: 'hire' } });
+      this.$router.push({ name: 'Hire', query: { selectedButton: 'hire' } });
     },
     selectButton(button) {
       this.selectedButton = button;
-      if(button === "jobs")
+      if (button === "jobs")
         this.jobs();
-      else if(button === "hire")
+      else if (button === "hire")
         this.hire();
     },
     getUserPicture() {
       return this.user && this.user.picture ? this.user.picture : profile;
     },
+    ...mapMutations(['setSearchQuery']),
+    updateSearchQuery() {
+      this.setSearchQuery(this.searchInput);
+      // console.log(this.$store.state.searchQuery);
+    },
   },
   computed: {
-    ...mapState(['user', 'loggedIn']) // 'user' and 'otherState' are Vuex state properties
+    ...mapState(['user', 'loggedIn']), // 'user' and 'otherState' are Vuex state properties
+    ...mapState(['searchQuery']),
   },
-  mounted(){
+  mounted() {
     this.selectedButton = this.$route.query.selectedButton;
   }
 };
@@ -132,7 +138,7 @@ export default {
   border-top: none;
   border-left: none;
   border-right: none;
-  
+
 
 }
 </style>
